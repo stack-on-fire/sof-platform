@@ -2,6 +2,7 @@ import { Box, Heading, SimpleGrid, Stack } from "@chakra-ui/react";
 import * as React from "react";
 import { BiDirections, BiHappyBeaming } from "react-icons/bi";
 import { FaGraduationCap, FaRegLifeRing } from "react-icons/fa";
+import Link from "next/link";
 import { Cta } from "./cta";
 import { Feature } from "./feature";
 import { Testimonial } from "./testimonial";
@@ -30,7 +31,9 @@ export const Features = () => {
               Spend time on ideas, not on figuring out how to write
               authentication or payment flows.
             </Heading>
-            <Cta w={{ base: "full", md: "auto" }}>Get Started</Cta>
+            <Link href="/platform">
+              <Cta w={{ base: "full", md: "auto" }}>Get Started</Cta>
+            </Link>
           </Stack>
           <SimpleGrid
             columns={{ base: 1, md: 2, lg: 4 }}
