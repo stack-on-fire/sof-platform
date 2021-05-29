@@ -1,21 +1,15 @@
 import {
   Menu,
-  MenuDivider,
   MenuItem,
-  MenuItemOption,
   MenuList,
-  MenuOptionGroup,
-  Text,
   useColorModeValue,
-  Center,
   Switch,
   Stack,
   Flex,
   Box,
   useColorMode,
+  MenuDivider,
 } from "@chakra-ui/react";
-import Payment from "components/payment";
-import SubscriptionManagement from "components/subscriptionManagement";
 import * as React from "react";
 import { AccountSwitcherButton } from "./account-switcher-button";
 import { signOut } from "next-auth/client";
@@ -23,14 +17,14 @@ import { useRouter } from "next/dist/client/router";
 import { useSession } from "next-auth/client";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-export const AccountSwitcher = ({ user }) => {
+export const AccountSwitcher = () => {
   const [session, loading] = useSession();
   const { colorMode, toggleColorMode } = useColorMode();
 
   const router = useRouter();
   return (
     <Menu>
-      <AccountSwitcherButton user={user} />
+      <AccountSwitcherButton user={session?.user} />
       <MenuList
         shadow="lg"
         py="4"
@@ -48,7 +42,9 @@ export const AccountSwitcher = ({ user }) => {
             <MoonIcon />
           </Stack>
         </Flex>
+        <MenuItem onClick={() => router.push("/platform")}>Courses</MenuItem>
         <MenuItem onClick={() => router.push("/")}>Learn more</MenuItem>
+        <MenuDivider />
         <MenuItem
           onClick={() => {
             router.push("/");
@@ -60,21 +56,6 @@ export const AccountSwitcher = ({ user }) => {
         >
           Logout
         </MenuItem>
-
-        {
-          //@ts-ignore
-          session?.user?.data?.subscription?.isSubscribed ? ( // @dimitri : to fix
-            <>
-              <MenuDivider />
-              <SubscriptionManagement session={session} />
-            </>
-          ) : (
-            <>
-              <MenuDivider />
-              <Payment plan="start" session={session} />
-            </>
-          )
-        }
       </MenuList>
     </Menu>
   );

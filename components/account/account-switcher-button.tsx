@@ -7,6 +7,7 @@ import {
   useMenuButton,
 } from "@chakra-ui/react";
 import * as React from "react";
+import Avatar from "boring-avatars";
 import { HiSelector } from "react-icons/hi";
 
 export const AccountSwitcherButton = (props: FlexProps & any) => {
@@ -28,24 +29,22 @@ export const AccountSwitcherButton = (props: FlexProps & any) => {
       transition="all 0.2s"
       _focus={{ shadow: "outline" }}
     >
-      <HStack flex="1" spacing="3">
-        <Img
-          w="8"
-          h="8"
-          rounded="md"
-          objectFit="cover"
-          src={props.user.image}
-          alt="Chakra UI"
+      <HStack flex="1" spacing={2}>
+        <Avatar
+          size={40}
+          name="Maria Mitchell"
+          variant="ring"
+          colors={["#B31237", "#F03813", "#FF8826", "#FFB914", "#2C9FA3"]}
         />
         <Box textAlign="start">
           <Box isTruncated fontWeight="semibold">
-            {props.user.name}
+            {props.user.email}
           </Box>
         </Box>
+        <Box fontSize="lg" color="gray.400">
+          <HiSelector />
+        </Box>
       </HStack>
-      <Box fontSize="lg" color="gray.400">
-        <HiSelector />
-      </Box>
     </Flex>
   );
 };

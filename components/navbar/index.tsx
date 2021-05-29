@@ -12,8 +12,8 @@ import Link from "next/link";
 import * as React from "react";
 
 import { Logo } from "components/logo";
-import { signOut, useSession } from "next-auth/client";
-import { HiOutlineLogout } from "react-icons/hi";
+import { useSession } from "next-auth/client";
+import { AccountSwitcher } from "components/account";
 export const Navbar = () => {
   const [session, loading] = useSession();
 
@@ -33,13 +33,7 @@ export const Navbar = () => {
           </Link>
           {session ? (
             <HStack>
-              <Text>{session.user.email}</Text>
-              <IconButton
-                variant="ghost"
-                aria-label="Sign out"
-                icon={<HiOutlineLogout />}
-                onClick={() => signOut()}
-              />
+              <AccountSwitcher />
             </HStack>
           ) : (
             <Link href="/signin">
