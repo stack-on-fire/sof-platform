@@ -25,11 +25,12 @@ import {
 import client from "apollo-client";
 import { Navbar } from "components";
 import { Course } from "components/courses/types";
+import ReactPlayer from "react-player";
 import { format } from "date-fns";
 import gql from "graphql-tag";
 import { fetchAPI } from "lib/api";
 import { useRouter } from "next/dist/client/router";
-import React from "react";
+import React, { useState } from "react";
 import { FaPhotoVideo } from "react-icons/fa";
 
 type Props = {
@@ -45,7 +46,8 @@ const CourseDetail = ({ course }: Props) => {
       <IconButton
         onClick={() => router.back()}
         borderRadius={100}
-        m={4}
+        ml={4}
+        mt={4}
         aria-label="Back"
         size="md"
         icon={<ArrowBackIcon />}
@@ -109,6 +111,9 @@ const CourseDetail = ({ course }: Props) => {
                           <Button
                             onClick={(e) => {
                               e.stopPropagation();
+                              router.push(
+                                `/course/${course.slug}/${module.slug}`
+                              );
                             }}
                           >
                             Start watching
@@ -135,22 +140,24 @@ const CourseDetail = ({ course }: Props) => {
                         {module.videos.map((video) => {
                           console.log(video);
                           return (
-                            <ListItem pl={4} display="flex" alignItems="center">
-                              <ListIcon
-                                color={useColorModeValue(
-                                  "gray.700",
-                                  "gray.300"
-                                )}
-                                as={FaPhotoVideo}
-                              />
-                              <Text
-                                color={useColorModeValue(
-                                  "gray.700",
-                                  "gray.500"
-                                )}
-                              >
-                                {video.title}
-                              </Text>
+                            <ListItem pl={4}>
+                              <Flex alignItems="center">
+                                <ListIcon
+                                  color={useColorModeValue(
+                                    "gray.700",
+                                    "gray.300"
+                                  )}
+                                  as={FaPhotoVideo}
+                                />
+                                <Text
+                                  color={useColorModeValue(
+                                    "gray.700",
+                                    "gray.500"
+                                  )}
+                                >
+                                  {video.title}
+                                </Text>
+                              </Flex>
                             </ListItem>
                           );
                         })}
@@ -187,6 +194,7 @@ export async function getStaticProps({ params }) {
     query Courses($slug: String) {
       courses(where: { slug: $slug }) {
         id
+        slug
         cover {
           url
         }

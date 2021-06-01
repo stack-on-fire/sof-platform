@@ -31,4 +31,10 @@ export type Module = {
 
 export type Video = {
   title: string;
+  slug: string;
+  videoFile: VideoFile;
+};
+
+export type VideoFile = {
+  url: string;
 };
