@@ -1,12 +1,18 @@
-import { Box, Flex, Heading, HStack, Stack, Text } from "@chakra-ui/layout";
+import {
+  Box,
+  Divider,
+  Flex,
+  Heading,
+  HStack,
+  Stack,
+  Text,
+} from "@chakra-ui/layout";
 import { Navbar } from "components";
 import { Course, Module as ModuleType, Video } from "components/courses/types";
 import { fetchAPI } from "lib/api";
 import React, { createRef, useEffect, useState } from "react";
 import flatten from "lodash/flatten";
 import { useRouter } from "next/dist/client/router";
-import { IconButton } from "@chakra-ui/button";
-import { ArrowBackIcon } from "@chakra-ui/icons";
 import gql from "graphql-tag";
 import client from "apollo-client";
 import ReactPlayer from "react-player";
@@ -15,13 +21,13 @@ import { useColorModeValue } from "@chakra-ui/color-mode";
 import { customFormatDuration } from "utils";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Switch } from "@chakra-ui/switch";
+import { useBreakpointValue } from "@chakra-ui/media-query";
 
 type Props = {
   module: ModuleType;
 };
 
 const Module = ({ module }) => {
-  const router = useRouter();
   const [isPlaying, setPlaying] = useState(false);
   const [autoPlay, setAutoplay] = useState(false);
   const [videoDurations, setVideoDurations] = useState([]);
@@ -53,27 +59,22 @@ const Module = ({ module }) => {
   }, [elRefs, metaLoaded]);
 
   return (
-    <Box>
+    <Box maxW={1200} m="auto">
       <Navbar />
-      <IconButton
-        onClick={() => router.back()}
-        borderRadius={100}
-        ml={4}
-        mt={4}
-        aria-label="Back"
-        size="md"
-        icon={<ArrowBackIcon />}
-      />
-      <Heading mb={8} textAlign="center">
-        {module.title}
-      </Heading>
-
-      <Flex>
-        <Box>
+      <Flex flexGrow={3} direction={["column", "column", "column", "row"]}>
+        <Flex
+          p={[2, 2, 2, 0]}
+          justifyContent={["center", null]}
+          position="relative"
+          maxH={[null, null, null, 400]}
+          width="100%"
+        >
           <ReactPlayer
             playing={isPlaying}
             controls={true}
             url={playedVideoUrl}
+            width="100%"
+            height="100%"
             config={{
               file: {
                 attributes: {
@@ -92,19 +93,38 @@ const Module = ({ module }) => {
               }
             }}
           />
-        </Box>
-        <Box
-          flexGrow={1}
+        </Flex>
+        <Flex
+          direction="column"
+          maxH={400}
+          minWidth={330}
+          overflow="scroll"
+          marginX="auto"
           border="1px solid"
-          borderColor={useColorModeValue("gray.400", "gray.500")}
+          borderColor={useColorModeValue("gray.400", "gray.700")}
+          mt={useBreakpointValue({
+            sm: 4,
+            md: 4,
+            lg: 0,
+          })}
+          borderRadius={useBreakpointValue({
+            sm: 8,
+            md: 8,
+            lg: 0,
+          })}
         >
-          <Box m={2} display="flex">
-            <FormControl
-              justifyContent="flex-end"
-              display="flex"
-              alignItems="center"
-            >
-              <FormLabel htmlFor="email-alerts" mb="0">
+          <Flex
+            p={4}
+            position="sticky"
+            top="0px"
+            backgroundColor={useColorModeValue("gray.400", "gray.800")}
+            borderBottom="1px solid"
+            borderColor={useColorModeValue("gray.400", "gray.500")}
+            justifyContent="space-between"
+          >
+            <Heading size="md">{module.title}</Heading>
+            <FormControl ml={4} maxW={120} display="flex" alignItems="center">
+              <FormLabel mb="0" htmlFor="email-alerts">
                 Auto-play
               </FormLabel>
               <Switch
@@ -112,7 +132,7 @@ const Module = ({ module }) => {
                 onChange={() => setAutoplay((autoPlay) => !autoPlay)}
               />
             </FormControl>
-          </Box>
+          </Flex>
           {module.videos.map((video: Video, index) => {
             const duration = videoDurations.find(
               (v) => v.src === video.videoFile.url
@@ -171,8 +191,22 @@ const Module = ({ module }) => {
               </HStack>
             );
           })}
-        </Box>
+        </Flex>
       </Flex>
+      <Divider
+        my={4}
+        display={useBreakpointValue({
+          sm: "block",
+          md: "block",
+          lg: "none",
+        })}
+      />
+      <Heading ml={4} mt={4}>
+        {module.title}
+      </Heading>
+      <Text ml={4} mt={4} mb={16}>
+        {module.description}
+      </Text>
     </Box>
   );
 };
