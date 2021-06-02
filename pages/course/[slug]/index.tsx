@@ -6,7 +6,7 @@ import {
 } from "@chakra-ui/accordion";
 import { Button, IconButton } from "@chakra-ui/button";
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import { ArrowBackIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Image } from "@chakra-ui/image";
 import {
   AspectRatio,
@@ -108,16 +108,20 @@ const CourseDetail = ({ course }: Props) => {
                               {module.videos.length} videos
                             </Text>
                           </HStack>
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              router.push(
-                                `/course/${course.slug}/${module.slug}`
-                              );
-                            }}
-                          >
-                            Start watching
-                          </Button>
+                          <HStack>
+                            <Button
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                router.push(
+                                  `/course/${course.slug}/${module.slug}`
+                                );
+                              }}
+                            >
+                              Start watching
+                            </Button>
+                            <ChevronDownIcon />
+                          </HStack>
                         </Flex>
                       </Box>
                     </AccordionButton>
@@ -138,7 +142,6 @@ const CourseDetail = ({ course }: Props) => {
 
                       <List spacing={3}>
                         {module.videos.map((video) => {
-                          console.log(video);
                           return (
                             <ListItem pl={4}>
                               <Flex alignItems="center">
