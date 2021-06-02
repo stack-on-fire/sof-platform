@@ -2,6 +2,7 @@ import { useColorModeValue } from "@chakra-ui/color-mode";
 import { Image } from "@chakra-ui/image";
 import {
   Box,
+  Flex,
   Heading,
   HStack,
   SimpleGrid,
@@ -28,40 +29,38 @@ const Courses = ({ courses }) => {
               role="group"
             >
               <Link as={`/course/${course.slug}`} href="/course/[slug]">
-                <Stack spacing={4}>
+                <Flex direction="column" height="100%">
                   <Image
                     borderRadius={10}
                     boxShadow="base"
                     src={course.cover?.url}
                     layout="fixed"
                   />
-                  <Stack>
-                    <Box mb={2}>
-                      <Heading
-                        color={useColorModeValue("gray.700", "gray.100")}
-                        fontSize="2xl"
-                        mb={1}
-                        _groupHover={{ color: "red.400" }}
-                      >
-                        {course.title}
-                      </Heading>
-                      <Box color={useColorModeValue("gray.400", "gray.500")}>
-                        {course.description}
-                      </Box>
-                    </Box>
-                    <HStack>
-                      <Image
-                        borderRadius={20}
-                        w={10}
-                        h={10}
-                        src={course.author.profileImage.url}
-                      />
-                      <Text fontSize="xs" fontWeight="medium">
-                        {course.author.name}
-                      </Text>
-                    </HStack>
-                  </Stack>
-                </Stack>
+
+                  <Heading
+                    mt={4}
+                    color={useColorModeValue("gray.700", "gray.100")}
+                    fontSize="2xl"
+                    mb={2}
+                    _groupHover={{ color: "red.400" }}
+                  >
+                    {course.title}
+                  </Heading>
+                  <Box color={useColorModeValue("gray.400", "gray.500")} mb={2}>
+                    {course.description}
+                  </Box>
+                  <HStack marginTop="auto">
+                    <Image
+                      borderRadius={20}
+                      w={10}
+                      h={10}
+                      src={course.author.profileImage.url}
+                    />
+                    <Text fontSize="xs" fontWeight="medium">
+                      {course.author.name}
+                    </Text>
+                  </HStack>
+                </Flex>
               </Link>
             </Box>
           );

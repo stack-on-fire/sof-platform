@@ -9,6 +9,7 @@ export type Course = {
   author: Author;
   cover: Image;
   modules: [Module];
+  prerequisites: [string];
 };
 
 export type Author = {

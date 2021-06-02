@@ -25,12 +25,13 @@ import {
 import client from "apollo-client";
 import { Navbar } from "components";
 import { Course } from "components/courses/types";
-import ReactPlayer from "react-player";
+
 import { format } from "date-fns";
 import gql from "graphql-tag";
 import { fetchAPI } from "lib/api";
 import { useRouter } from "next/dist/client/router";
-import React, { useState } from "react";
+import React from "react";
+import { GiWhiteBook } from "react-icons/gi";
 import { FaPhotoVideo } from "react-icons/fa";
 
 type Props = {
@@ -40,6 +41,7 @@ type Props = {
 const CourseDetail = ({ course }: Props) => {
   const modules = course.modules;
   const router = useRouter();
+
   return (
     <Box>
       <Navbar />
@@ -87,16 +89,28 @@ const CourseDetail = ({ course }: Props) => {
             {course.description}
           </Text>
         </Center>
+        <Center mt={4} mb={12}>
+          <Button
+            colorScheme="orange"
+            size="lg"
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(`/course/${course.slug}/${course.modules[0].slug}`);
+            }}
+          >
+            Start watching{" "}
+          </Button>
+        </Center>
 
-        <Stack>
+        <Stack maxW={700} m="auto" mb={4}>
           <Heading textAlign="center" fontSize="2xl">
             Modules
           </Heading>
           <Box p={4}>
             <Accordion allowMultiple>
-              {modules.map((module) => {
+              {modules.map((module, index) => {
                 return (
-                  <AccordionItem key={module.id}>
+                  <AccordionItem key={index}>
                     <AccordionButton>
                       <Box flex="1" textAlign="left">
                         <Flex justifyContent="space-between">
@@ -108,24 +122,22 @@ const CourseDetail = ({ course }: Props) => {
                               {module.videos.length} videos
                             </Text>
                           </HStack>
-                          <HStack>
-                            <Button
-                              size="sm"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                router.push(
-                                  `/course/${course.slug}/${module.slug}`
-                                );
-                              }}
-                            >
-                              Start watching
-                            </Button>
-                            <ChevronDownIcon />
-                          </HStack>
+                          <ChevronDownIcon />
                         </Flex>
                       </Box>
                     </AccordionButton>
                     <AccordionPanel pb={4}>
+                      <Button
+                        colorScheme="orange"
+                        size="sm"
+                        mb={4}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          router.push(`/course/${course.slug}/${module.slug}`);
+                        }}
+                      >
+                        Start watching
+                      </Button>
                       <Heading size="sm" mb={2}>
                         What you'll learn
                       </Heading>
@@ -172,6 +184,29 @@ const CourseDetail = ({ course }: Props) => {
             </Accordion>
           </Box>
         </Stack>
+        <Stack maxW={700} m="auto">
+          <Heading textAlign="center" fontSize="2xl">
+            Prerequisites
+          </Heading>
+          <Box p={4}>
+            <Center>
+              <List spacing={3}>
+                {course?.prerequisites.map((v) => {
+                  return (
+                    <ListItem>
+                      <ListIcon
+                        fontSize={20}
+                        as={GiWhiteBook}
+                        color="orange.500"
+                      />
+                      {v}
+                    </ListItem>
+                  );
+                }) ?? "Anyone could start this course!"}
+              </List>
+            </Center>
+          </Box>
+        </Stack>
       </Box>
     </Box>
   );
@@ -209,6 +244,7 @@ export async function getStaticProps({ params }) {
         title
         description
         updated_at
+        prerequisites
         modules {
           title
           description

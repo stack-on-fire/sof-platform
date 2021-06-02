@@ -101,7 +101,7 @@ const Module = ({ module }) => {
           overflow="scroll"
           marginX="auto"
           border="1px solid"
-          borderColor={useColorModeValue("gray.400", "gray.700")}
+          borderColor={useColorModeValue("gray.200", "gray.700")}
           mt={useBreakpointValue({
             sm: 4,
             md: 4,
@@ -112,14 +112,15 @@ const Module = ({ module }) => {
             md: 8,
             lg: 0,
           })}
+          m={[4, 4, 4, 0]}
         >
           <Flex
             p={4}
             position="sticky"
             top="0px"
-            backgroundColor={useColorModeValue("gray.400", "gray.800")}
+            backgroundColor={useColorModeValue("white", "gray.800")}
             borderBottom="1px solid"
-            borderColor={useColorModeValue("gray.400", "gray.500")}
+            borderColor={useColorModeValue("gray.200", "gray.500")}
             justifyContent="space-between"
           >
             <Heading size="md">{module.title}</Heading>
@@ -172,7 +173,14 @@ const Module = ({ module }) => {
 
                 <Stack>
                   <HStack mb={-3}>
-                    <Text color={useColorModeValue("gray.400", "gray.300")}>
+                    <Text
+                      color={useColorModeValue(
+                        playedVideoUrl === video.videoFile.url
+                          ? "white"
+                          : "gray.400",
+                        "gray.300"
+                      )}
+                    >
                       {index + 1}
                     </Text>
                     <Text fontWeight="bold">{video.title}</Text>
@@ -180,7 +188,12 @@ const Module = ({ module }) => {
                   <Text
                     pl={5}
                     fontSize={14}
-                    color={useColorModeValue("gray.400", "gray.300")}
+                    color={useColorModeValue(
+                      playedVideoUrl === video.videoFile.url
+                        ? "white"
+                        : "gray.400",
+                      "gray.300"
+                    )}
                     _groupHover={{
                       color: "white",
                     }}
@@ -201,12 +214,12 @@ const Module = ({ module }) => {
           lg: "none",
         })}
       />
-      <Heading ml={4} mt={4}>
-        {module.title}
-      </Heading>
-      <Text ml={4} mt={4} mb={16}>
-        {module.description}
-      </Text>
+      <Box p={4}>
+        <Heading>{module.title}</Heading>
+        <Text mt={4} mb={16}>
+          {module.description}
+        </Text>
+      </Box>
     </Box>
   );
 };
