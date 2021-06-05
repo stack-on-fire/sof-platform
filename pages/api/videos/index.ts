@@ -5,11 +5,11 @@ export default async function handle(req, res) {
   const session = await getSession({ req });
   const userId = session.id;
 
-  const coursesByUser = await prisma.course.findMany({
+  const watchedVideosByUser = await prisma.watchedVideo.findMany({
     where: {
       userId,
     },
   });
 
-  res.status(200).json({ coursesByUser });
+  res.status(200).json({ watchedVideosByUser });
 }

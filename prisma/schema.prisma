@@ -48,7 +48,8 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
 
-  Course Course[]
+  Course       Course[]
+  WatchedVideo WatchedVideo[]
   @@map(name: "users")
 }
 
@@ -56,19 +57,18 @@ model Course {
   id             Int     @id @default(autoincrement())
   strapiCourseId Int
   isPurchased    Boolean @default(false)
-  user           User    @relation(fields: [userId], references: [id])
-  userId         Int
 
-  watchedVideo WatchedVideo[]
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
   @@map("courses")
 }
 
 model WatchedVideo {
-  id            Int    @id @default(autoincrement())
+  id            Int @id @default(autoincrement())
   strapiVideoId Int
-  course        Course @relation(fields: [courseId], references: [id])
-  courseId      Int
 
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
   @@map("watchedVideos")
 }
 

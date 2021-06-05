@@ -22,12 +22,23 @@ import { customFormatDuration } from "utils";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Switch } from "@chakra-ui/switch";
 import { useBreakpointValue } from "@chakra-ui/media-query";
+import useSWR from "swr";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 
 type Props = {
   module: ModuleType;
 };
 
-const Module = ({ module }) => {
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw Error("Error");
+  }
+  const response = await res.json();
+  return response;
+};
+
+const Module = ({ module }: Props) => {
   const [isPlaying, setPlaying] = useState(false);
   const [autoPlay, setAutoplay] = useState(false);
   const [videoDurations, setVideoDurations] = useState([]);
@@ -35,6 +46,10 @@ const Module = ({ module }) => {
   const [elRefs, setElRefs] = React.useState([]);
   const arrLength = module.videos.length;
   const [playedVideo, setPlayedVideo] = useState(module.videos[0]);
+
+  const { data, error, mutate } = useSWR([`/api/videos`], fetcher);
+
+  console.log(data);
 
   useEffect(() => {
     setElRefs((elRefs) =>
@@ -80,10 +95,17 @@ const Module = ({ module }) => {
                 },
               },
             }}
-            onEnded={() => {
+            onEnded={async () => {
               const currentlyPlayedIndex = module.videos.findIndex(
                 (v) => v.id === playedVideo.id
               );
+              const currentVideoId = Number(playedVideo.id);
+              await fetch("/api/setVideoAsWatched", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ strapiVideoId: currentVideoId }),
+              });
+              mutate();
               const nextVideo = module.videos[currentlyPlayedIndex + 1];
               if (nextVideo && autoPlay) {
                 setPlayedVideo(nextVideo);
@@ -148,7 +170,7 @@ const Module = ({ module }) => {
             const isCurrentVideoPlaying = playedVideo.id === video.id;
 
             return (
-              <HStack
+              <Flex
                 role="group"
                 pl={2}
                 py={3}
@@ -169,33 +191,45 @@ const Module = ({ module }) => {
                   />
                 </VisuallyHidden>
 
-                <Stack>
-                  <HStack mb={-3}>
+                <Flex
+                  width="100%"
+                  alignItems="center"
+                  justifyContent="space-between"
+                >
+                  <Stack>
+                    <HStack mb={-3}>
+                      <Text
+                        color={useColorModeValue(
+                          isCurrentVideoPlaying ? "white" : "gray.400",
+                          "gray.300"
+                        )}
+                      >
+                        {index + 1}
+                      </Text>
+                      <Text fontWeight="bold">{video.title}</Text>
+                    </HStack>
                     <Text
+                      pl={5}
+                      fontSize={14}
                       color={useColorModeValue(
                         isCurrentVideoPlaying ? "white" : "gray.400",
                         "gray.300"
                       )}
+                      _groupHover={{
+                        color: "white",
+                      }}
                     >
-                      {index + 1}
+                      {humaneReadableDuration}
                     </Text>
-                    <Text fontWeight="bold">{video.title}</Text>
-                  </HStack>
-                  <Text
-                    pl={5}
-                    fontSize={14}
-                    color={useColorModeValue(
-                      isCurrentVideoPlaying ? "white" : "gray.400",
-                      "gray.300"
-                    )}
-                    _groupHover={{
-                      color: "white",
-                    }}
-                  >
-                    {humaneReadableDuration}
-                  </Text>
-                </Stack>
-              </HStack>
+                  </Stack>
+                  {data?.watchedVideosByUser.some(
+                    (watchedVideo) =>
+                      watchedVideo.strapiVideoId === Number(video.id)
+                  ) && (
+                    <CheckCircleIcon color="green.200" fontSize={20} mr={4} />
+                  )}
+                </Flex>
+              </Flex>
             );
           })}
         </Flex>

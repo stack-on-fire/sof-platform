@@ -2,14 +2,14 @@ import prisma from "lib/prisma";
 import { getSession } from "next-auth/client";
 
 export default async function handle(req, res) {
-  const { strapiCourseId } = req.body;
+  const { strapiVideoId } = req.body;
 
   const session = await getSession({ req });
-  const result = await prisma.course.create({
+  const result = await prisma.watchedVideo.create({
     data: {
       user: { connect: { id: session.id as number } },
-      strapiCourseId: Number(strapiCourseId),
+      strapiVideoId: Number(strapiVideoId),
     },
   });
-  res.status(200).send({ result });
+  res.status(200).json({ result });
 }
