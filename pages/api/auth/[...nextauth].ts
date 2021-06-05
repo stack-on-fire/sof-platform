@@ -1,9 +1,11 @@
+import { Course } from "components/courses/types";
 import { NextApiHandler } from "next";
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import Adapters from "next-auth/adapters";
 
 import { PrismaClient } from "@prisma/client";
+import { fetchAPI } from "lib/api";
 
 const prisma = new PrismaClient();
 
@@ -27,6 +29,11 @@ const options = {
   adapter: Adapters.Prisma.Adapter({
     prisma,
   }),
-
   secret: process.env.SECRET,
+  callbacks: {
+    session: async (session, user) => {
+      session.id = user.id;
+      return Promise.resolve(session);
+    },
+  },
 };

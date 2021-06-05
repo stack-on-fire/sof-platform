@@ -34,9 +34,7 @@ const Module = ({ module }) => {
   const [metaLoaded, setMetaLoaded] = useState("");
   const [elRefs, setElRefs] = React.useState([]);
   const arrLength = module.videos.length;
-  const [playedVideoUrl, setPlayedVideoUrl] = useState(
-    module.videos[0].videoFile.url
-  );
+  const [playedVideo, setPlayedVideo] = useState(module.videos[0]);
 
   useEffect(() => {
     setElRefs((elRefs) =>
@@ -72,7 +70,7 @@ const Module = ({ module }) => {
           <ReactPlayer
             playing={isPlaying}
             controls={true}
-            url={playedVideoUrl}
+            url={playedVideo.videoFile.url}
             width="100%"
             height="100%"
             config={{
@@ -84,11 +82,11 @@ const Module = ({ module }) => {
             }}
             onEnded={() => {
               const currentlyPlayedIndex = module.videos.findIndex(
-                (v) => v.videoFile.url === playedVideoUrl
+                (v) => v.id === playedVideo.id
               );
               const nextVideo = module.videos[currentlyPlayedIndex + 1];
               if (nextVideo && autoPlay) {
-                setPlayedVideoUrl(nextVideo.videoFile.url);
+                setPlayedVideo(nextVideo);
                 setTimeout(() => setPlaying(true), 500);
               }
             }}
@@ -147,26 +145,26 @@ const Module = ({ module }) => {
                   .replace("minutes", "m")
               : "";
 
+            const isCurrentVideoPlaying = playedVideo.id === video.id;
+
             return (
               <HStack
                 role="group"
                 pl={2}
                 py={3}
-                backgroundColor={
-                  playedVideoUrl === video.videoFile.url ? "blue.400" : null
-                }
-                color={playedVideoUrl === video.videoFile.url ? "white" : null}
+                backgroundColor={isCurrentVideoPlaying ? "blue.400" : null}
+                color={isCurrentVideoPlaying ? "white" : null}
                 _hover={{
                   background: "blue.400",
                   cursor: "pointer",
                   color: "white",
                 }}
-                onClick={() => setPlayedVideoUrl(video.videoFile.url)}
+                onClick={() => setPlayedVideo(video)}
               >
                 <VisuallyHidden>
                   <video
                     onLoadedMetadata={() => setMetaLoaded(video.slug)}
-                    src={video.videoFile.url}
+                    src={video?.videoFile.url}
                     ref={elRefs[index]}
                   />
                 </VisuallyHidden>
@@ -175,9 +173,7 @@ const Module = ({ module }) => {
                   <HStack mb={-3}>
                     <Text
                       color={useColorModeValue(
-                        playedVideoUrl === video.videoFile.url
-                          ? "white"
-                          : "gray.400",
+                        isCurrentVideoPlaying ? "white" : "gray.400",
                         "gray.300"
                       )}
                     >
@@ -189,9 +185,7 @@ const Module = ({ module }) => {
                     pl={5}
                     fontSize={14}
                     color={useColorModeValue(
-                      playedVideoUrl === video.videoFile.url
-                        ? "white"
-                        : "gray.400",
+                      isCurrentVideoPlaying ? "white" : "gray.400",
                       "gray.300"
                     )}
                     _groupHover={{
@@ -252,6 +246,7 @@ export async function getStaticProps({ params }) {
         description
         slug
         videos {
+          id
           title
           slug
           duration

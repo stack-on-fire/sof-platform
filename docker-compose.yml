@@ -8,17 +8,28 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secret
     ports:
-      - "5432:5432"
+      - "4242:5432"
     volumes:
       - ./db:/var/lib/postgresql/data
+  strapi-pg:
+    image: postgres:13
+    restart: "always"
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./strapi-db:/var/lib/postgresql/data
   strapi:
     image: strapi/strapi
     container_name: strapi
     restart: unless-stopped
     environment:
       DATABASE_CLIENT: postgres
-      DATABASE_NAME: prisma
-      DATABASE_HOST: pg
+      DATABASE_NAME: strapi
+      DATABASE_HOST: strapi-pg
       DATABASE_PORT: 5432
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: secret

@@ -1,8 +1,12 @@
 import { Box } from "@chakra-ui/layout";
+import client from "apollo-client";
 import { Navbar } from "components";
 import Courses from "components/courses";
-import { fetchAPI } from "lib/api";
+import { Course, Module, Video } from "components/courses/types";
+import gql from "graphql-tag";
 import React from "react";
+import flatten from "lodash/flatten";
+import uniq from "lodash/uniq";
 
 const Platform = ({ courses }) => {
   return (
@@ -16,7 +20,47 @@ const Platform = ({ courses }) => {
 export default Platform;
 
 export async function getStaticProps() {
-  const courses = await fetchAPI("/courses");
+  const query = gql`
+    query Courses {
+      courses {
+        id
+        slug
+        cover {
+          url
+        }
+        author {
+          name
+          profileImage {
+            url
+          }
+        }
+        title
+        description
+        updated_at
+        prerequisites
+        modules {
+          title
+          description
+          slug
+          videos {
+            id
+            title
+            duration
+            videoFile {
+              provider_metadata
+              id
+              url
+            }
+          }
+        }
+      }
+    }
+  `;
+  const { data } = await client.query({
+    query,
+  });
+
+  const courses = data?.courses;
 
   return {
     props: {

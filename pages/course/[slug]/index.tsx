@@ -6,7 +6,7 @@ import {
 } from "@chakra-ui/accordion";
 import { Button, IconButton } from "@chakra-ui/button";
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import { ArrowBackIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, CheckIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Image } from "@chakra-ui/image";
 import {
   AspectRatio,
@@ -33,6 +33,17 @@ import { useRouter } from "next/dist/client/router";
 import React from "react";
 import { GiWhiteBook } from "react-icons/gi";
 import { FaPhotoVideo } from "react-icons/fa";
+import useSWR from "swr";
+import { Tag, TagLabel, TagLeftIcon } from "@chakra-ui/tag";
+
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw Error("Error");
+  }
+  const response = await res.json();
+  return response;
+};
 
 type Props = {
   course: Course;
@@ -42,19 +53,47 @@ const CourseDetail = ({ course }: Props) => {
   const modules = course.modules;
   const router = useRouter();
 
+  const { data, error, mutate } = useSWR([`/api/courses`], fetcher);
+
+  const isEnrolled = data?.coursesByUser.some(
+    (courseByUser) => courseByUser.strapiCourseId === Number(course.id)
+  );
+
   return (
     <Box>
       <Navbar />
-      <IconButton
-        onClick={() => router.back()}
-        borderRadius={100}
-        ml={4}
-        mt={4}
-        aria-label="Back"
-        size="md"
-        icon={<ArrowBackIcon />}
-      />
-      <Heading textAlign="center" mb={2}>
+      <Flex mt={2} mx={4} alignItems="center" justifyContent="space-between">
+        <IconButton
+          onClick={() => router.back()}
+          borderRadius={100}
+          aria-label="Back"
+          size="md"
+          icon={<ArrowBackIcon />}
+        />
+        {isEnrolled ? (
+          <Tag size="lg" variant="subtle" colorScheme="orange">
+            <TagLeftIcon boxSize="12px" as={CheckIcon} />
+            <TagLabel>Enrolled</TagLabel>
+          </Tag>
+        ) : (
+          <Button
+            colorScheme="orange"
+            size="md"
+            onClick={async (e) => {
+              e.stopPropagation();
+              await fetch("/api/enroll", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ strapiCourseId: course.id }),
+              });
+              mutate();
+            }}
+          >
+            Enroll to the course
+          </Button>
+        )}
+      </Flex>
+      <Heading mb={2} textAlign="center">
         {course.title}
       </Heading>
       <Center mb={2}>
@@ -93,12 +132,20 @@ const CourseDetail = ({ course }: Props) => {
           <Button
             colorScheme="orange"
             size="lg"
-            onClick={(e) => {
+            onClick={async (e) => {
               e.stopPropagation();
+              if (isEnrolled) {
+                await fetch("/api/enroll", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ strapiCourseId: course.id }),
+                });
+                mutate();
+              }
               router.push(`/course/${course.slug}/${course.modules[0].slug}`);
             }}
           >
-            Start watching{" "}
+            {isEnrolled ? "Start watching" : "Enroll and start watching"}
           </Button>
         </Center>
 
@@ -127,17 +174,6 @@ const CourseDetail = ({ course }: Props) => {
                       </Box>
                     </AccordionButton>
                     <AccordionPanel pb={4}>
-                      <Button
-                        colorScheme="orange"
-                        size="sm"
-                        mb={4}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          router.push(`/course/${course.slug}/${module.slug}`);
-                        }}
-                      >
-                        Start watching
-                      </Button>
                       <Heading size="sm" mb={2}>
                         What you'll learn
                       </Heading>
@@ -190,8 +226,13 @@ const CourseDetail = ({ course }: Props) => {
           </Heading>
           <Box p={4}>
             <Center>
+              {!course.prerequisites && (
+                <Text fontSize={16}>
+                  This course is well fit for beginners 🚀
+                </Text>
+              )}
               <List spacing={3}>
-                {course?.prerequisites.map((v) => {
+                {course?.prerequisites?.map((v) => {
                   return (
                     <ListItem>
                       <ListIcon
@@ -202,7 +243,7 @@ const CourseDetail = ({ course }: Props) => {
                       {v}
                     </ListItem>
                   );
-                }) ?? "Anyone could start this course!"}
+                })}
               </List>
             </Center>
           </Box>
@@ -250,6 +291,7 @@ export async function getStaticProps({ params }) {
           description
           slug
           videos {
+            id
             title
             duration
             videoFile {
