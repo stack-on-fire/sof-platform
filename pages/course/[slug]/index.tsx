@@ -62,7 +62,14 @@ const CourseDetail = ({ course }: Props) => {
   return (
     <Box>
       <Navbar />
-      <Flex mt={2} mx={4} alignItems="center" justifyContent="space-between">
+      <Flex
+        maxW={1200}
+        mt={2}
+        px={4}
+        mx="auto"
+        alignItems="center"
+        justifyContent="space-between"
+      >
         <IconButton
           onClick={() => router.back()}
           borderRadius={100}
