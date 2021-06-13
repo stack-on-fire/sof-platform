@@ -27,6 +27,13 @@ class MyDocument extends Document {
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <Main />
           <NextScript />
+          <script src="https://cdn.paddle.com/paddle/paddle.js" />
+          <script
+            type="text/javascript"
+            dangerouslySetInnerHTML={{
+              __html: `Paddle.Environment.set('sandbox');Paddle.Setup({ vendor: 2338 });`,
+            }}
+          />
         </body>
       </Html>
     );

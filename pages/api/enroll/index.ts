@@ -5,7 +5,7 @@ export default async function handle(req, res) {
   const { strapiCourseId } = req.body;
 
   const session = await getSession({ req });
-  const result = await prisma.course.create({
+  const result = await prisma.enrolment.create({
     data: {
       user: { connect: { id: session.id as number } },
       strapiCourseId: Number(strapiCourseId),

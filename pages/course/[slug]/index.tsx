@@ -6,7 +6,13 @@ import {
 } from "@chakra-ui/accordion";
 import { Button, IconButton } from "@chakra-ui/button";
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import { ArrowBackIcon, CheckIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import {
+  ArrowBackIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  UnlockIcon,
+  CheckCircleIcon,
+} from "@chakra-ui/icons";
 import { Image } from "@chakra-ui/image";
 import {
   AspectRatio,
@@ -35,6 +41,7 @@ import { GiWhiteBook } from "react-icons/gi";
 import { FaPhotoVideo } from "react-icons/fa";
 import useSWR from "swr";
 import { Tag, TagLabel, TagLeftIcon } from "@chakra-ui/tag";
+import { useSession } from "next-auth/client";
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -52,10 +59,38 @@ type Props = {
 const CourseDetail = ({ course }: Props) => {
   const modules = course.modules;
   const router = useRouter();
+  const [session, loading] = useSession();
 
-  const { data, error, mutate } = useSWR([`/api/courses`], fetcher);
+  const openCheckout = () => {
+    if (!loading) {
+      const windowAny: any = window;
+      const Paddle = windowAny.Paddle;
+      Paddle.Checkout.open({
+        product: "12394",
+        passthrough: JSON.stringify({
+          user: session.id,
+          strapiCourseId: course.id,
+          affiliation: "Blah",
+        }),
+      });
+    }
+  };
 
-  const isEnrolled = data?.coursesByUser.some(
+  const {
+    data: coursesData,
+    error: coursesError,
+    mutate: coursesMutate,
+  } = useSWR([`/api/courses`], fetcher);
+  const { data: purchasesData, error: purchasesError } = useSWR(
+    [`/api/purchases`],
+    fetcher
+  );
+
+  const isPurchased = purchasesData?.purchasesByUser.some(
+    (purchaseByUser) => purchaseByUser.strapiCourseId === Number(course.id)
+  );
+
+  const isEnrolled = coursesData?.enrolmentsByUser.some(
     (courseByUser) => courseByUser.strapiCourseId === Number(course.id)
   );
 
@@ -93,7 +128,7 @@ const CourseDetail = ({ course }: Props) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ strapiCourseId: course.id }),
               });
-              mutate();
+              coursesMutate();
             }}
           >
             Enroll to the course
@@ -135,27 +170,39 @@ const CourseDetail = ({ course }: Props) => {
             {course.description}
           </Text>
         </Center>
-        <Center mt={4} mb={12}>
-          <Button
-            colorScheme="orange"
-            size="lg"
-            onClick={async (e) => {
-              e.stopPropagation();
-              if (isEnrolled) {
-                await fetch("/api/enroll", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ strapiCourseId: course.id }),
-                });
-                mutate();
-              }
-              router.push(`/course/${course.slug}/${course.modules[0].slug}`);
-            }}
-          >
-            {isEnrolled ? "Start watching" : "Enroll and start watching"}
-          </Button>
+        <Center mb={8}>
+          <Flex alignItems="center" direction={["column", "row"]}>
+            <Button
+              mr={[0, 4]}
+              mb={[2, 0]}
+              colorScheme="orange"
+              size="lg"
+              onClick={async (e) => {
+                e.stopPropagation();
+                if (isEnrolled) {
+                  await fetch("/api/enroll", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ strapiCourseId: course.id }),
+                  });
+                  coursesMutate();
+                }
+                router.push(`/course/${course.slug}/${course.modules[0].slug}`);
+              }}
+            >
+              {isEnrolled ? "Start watching" : "Enroll and start watching"}
+            </Button>
+            <Button
+              leftIcon={isPurchased ? <CheckCircleIcon /> : <UnlockIcon />}
+              colorScheme={isPurchased ? "green" : "blue"}
+              size="lg"
+              onClick={openCheckout}
+              isDisabled={isPurchased}
+            >
+              {isPurchased ? "Purchased" : "Unlock all modules"}
+            </Button>
+          </Flex>
         </Center>
-
         <Stack maxW={700} m="auto" mb={4}>
           <Heading textAlign="center" fontSize="2xl">
             Modules
@@ -199,7 +246,7 @@ const CourseDetail = ({ course }: Props) => {
                         {module.videos.map((video) => {
                           return (
                             <ListItem pl={4}>
-                              <Flex alignItems="center">
+                              <HStack alignItems="center">
                                 <ListIcon
                                   color={useColorModeValue(
                                     "gray.700",
@@ -215,7 +262,18 @@ const CourseDetail = ({ course }: Props) => {
                                 >
                                   {video.title}
                                 </Text>
-                              </Flex>
+                                <Button
+                                  size="xs"
+                                  onClick={() => {
+                                    router.push({
+                                      pathname: `/course/${course.slug}/${course.modules[0].slug}`,
+                                      query: { videoId: video.id },
+                                    });
+                                  }}
+                                >
+                                  Watch
+                                </Button>
+                              </HStack>
                             </ListItem>
                           );
                         })}
@@ -299,6 +357,7 @@ export async function getStaticProps({ params }) {
           slug
           videos {
             id
+            isIntro
             title
             duration
             videoFile {

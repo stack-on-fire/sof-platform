@@ -39,17 +39,21 @@ const fetcher = async (url: string) => {
 };
 
 const Module = ({ module }: Props) => {
+  const router = useRouter();
+  const videoFromUrlParam = module.videos.find(
+    (video) => Number(video.id) === Number(router?.query?.videoId)
+  );
   const [isPlaying, setPlaying] = useState(false);
   const [autoPlay, setAutoplay] = useState(false);
   const [videoDurations, setVideoDurations] = useState([]);
   const [metaLoaded, setMetaLoaded] = useState("");
   const [elRefs, setElRefs] = React.useState([]);
   const arrLength = module.videos.length;
-  const [playedVideo, setPlayedVideo] = useState(module.videos[0]);
+  const [playedVideo, setPlayedVideo] = useState(
+    videoFromUrlParam ?? module.videos[0]
+  );
 
   const { data, error, mutate } = useSWR([`/api/videos`], fetcher);
-
-  console.log(data);
 
   useEffect(() => {
     setElRefs((elRefs) =>
