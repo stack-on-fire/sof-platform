@@ -1,34 +1,25 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Purpose
 
-## Getting Started
+The main purpose of this micro-service is to display the course and user data from `Strapi CMS` and `Prisma Postgresql database`.
 
-First, run the development server:
+## How to run 
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Pulling respective repos
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- pull this project from git
+- pull `sof-ops` repo from git stack on fire organization
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Running databases in docker environment
+- cd into `sof-ops` project
+- run `docker-compose up -d` to run docker containers in detached mode(not bound to current terminal window)
+- run `docker ps` to verify the databases are running 
+### Prisma specific 
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- run `npx prisma migrate dev` to apply Postgresql migrations
+- run `npx prisma studio` to start a preview environment of your database - you can also play with the data directly there
+- run `npx prisma push` to experiment with schema shaping on any schema changes in development, when satisfied run `npx prisma migrate dev` to create actual migration files
+### Installing dependencies & running the project
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- run `yarn install`
+- run `yarn run dev`
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
