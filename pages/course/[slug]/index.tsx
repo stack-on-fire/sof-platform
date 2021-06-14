@@ -6,6 +6,7 @@ import {
 } from "@chakra-ui/accordion";
 import { Button, IconButton } from "@chakra-ui/button";
 import { useColorModeValue } from "@chakra-ui/color-mode";
+import Head from "next/head";
 import {
   ArrowBackIcon,
   CheckIcon,
@@ -96,6 +97,21 @@ const CourseDetail = ({ course }: Props) => {
 
   return (
     <Box>
+      <Head>
+        <head>
+          <meta key="og:title" name="og:title" content={course.title} />
+          <meta
+            key="og:description"
+            name="og:description"
+            content={course.description}
+          />
+          <meta
+            property="og:image"
+            //TODO: swap with original forked og-image service
+            content={`https://og-image.vercel.app/${course.title}.png`}
+          />
+        </head>
+      </Head>
       <Navbar />
       <Flex
         maxW={1200}
