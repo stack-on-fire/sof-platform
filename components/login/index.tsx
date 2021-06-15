@@ -1,17 +1,21 @@
 import React from "react";
 import {
   Box,
+  Button,
   Center,
   Heading,
+  SimpleGrid,
   Stack,
   Text,
-  useColorModeValue as mode,
   useColorModeValue,
+  VisuallyHidden,
 } from "@chakra-ui/react";
-import Link from "next/link";
+
 import { Logo } from "components/logo";
 import { LoginForm } from "./login-form";
-import { UnderlineLink } from "./underline-link";
+import { DividerWithText } from "./divider-with-text";
+import { FaGithub } from "react-icons/fa";
+import { signIn } from "next-auth/client";
 
 type Props = {
   variant: "signin" | "signup" | "forgot-password";
@@ -19,50 +23,61 @@ type Props = {
 
 export const Login = ({ variant }: Props) => {
   return (
-    <Box
-      overflowY="auto"
-      flex="1"
-      py={{ base: "10", md: "16" }}
-      px={{ base: "6", md: "10" }}
-    >
-      <Stack spacing={4} maxW="sm" mx="auto">
-        <Center>
-          <Logo />
-        </Center>
-        <Box textAlign="center" mb={{ base: "10", md: "16" }}>
-          <Stack>
-            <Heading
-              as="h1"
-              size="xl"
-              fontWeight="extrabold"
-              letterSpacing="tight"
-            >
-              {variant === "signin" && "Sign in to your account"}
-              {variant === "signup" && "Create a new account"}
-              {variant === "forgot-password" && "Recover your account"}
-            </Heading>
-            <Heading
-              color={useColorModeValue("gray.500", "gray.400")}
-              size="md"
-            >
-              We will send you a magic link
-            </Heading>
-          </Stack>
-          {/* {variant !== "signup" && (
-            <Text
-              mt="3"
-              color={mode("gray.600", "gray.400")}
-              fontWeight="medium"
-            >
-              Need an account?{" "}
-              <Link href="/signup">
-                <UnderlineLink>Sign up for free</UnderlineLink>
-              </Link>
-            </Text>
-          )} */}
+    <>
+      {" "}
+      <Box
+        maxW="md"
+        mx="auto"
+        overflowY="auto"
+        flex="1"
+        py={{ base: "10", md: "16" }}
+        px={{ base: "6", md: "10" }}
+      >
+        <Stack spacing={4} maxW="sm" mx="auto">
+          <Center>
+            <Logo />
+          </Center>
+          <Box textAlign="center">
+            <Stack>
+              <Heading
+                as="h1"
+                size="xl"
+                fontWeight="extrabold"
+                letterSpacing="tight"
+              >
+                {variant === "signin" && "Sign in to your account"}
+                {variant === "signup" && "Create a new account"}
+                {variant === "forgot-password" && "Recover your account"}
+              </Heading>
+              <Heading
+                color={useColorModeValue("gray.500", "gray.400")}
+                size="md"
+              >
+                We will send you a magic link
+              </Heading>
+            </Stack>
+          </Box>
+          <LoginForm variant={variant} />
+        </Stack>
+        <Box mt={8} mb={4} maxW={400} marginX="auto">
+          <DividerWithText mt={2}>or continue with</DividerWithText>
         </Box>
-        <LoginForm variant={variant} />
-      </Stack>
-    </Box>
+        <SimpleGrid mt="6" columns={3} spacing="3">
+          <Button
+            onClick={() =>
+              signIn("github", { callbackUrl: "http://localhost:3000" })
+            }
+            variant="outline"
+          >
+            <VisuallyHidden> Github</VisuallyHidden>
+            <FaGithub />
+          </Button>
+          {/* <Button color="currentColor" variant="outline">
+            <VisuallyHidden> Twitter</VisuallyHidden>
+            <FaTwitter />
+          </Button> */}
+        </SimpleGrid>
+      </Box>
+    </>
   );
 };
