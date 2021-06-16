@@ -43,7 +43,11 @@ export const AccountSwitcher = () => {
           </Stack>
         </Flex>
         <MenuItem onClick={() => router.push("/platform")}>Courses</MenuItem>
+        <MenuItem onClick={() => router.push("/my-courses")}>
+          My courses
+        </MenuItem>
         <MenuItem onClick={() => router.push("/")}>Learn more</MenuItem>
+        <MenuItem onClick={() => router.push("/settings")}>Settings</MenuItem>
         <MenuDivider />
         <MenuItem
           onClick={() => {

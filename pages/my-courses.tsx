@@ -1,15 +1,46 @@
 import { Box } from "@chakra-ui/layout";
 import client from "apollo-client";
 import { Navbar } from "components";
-import Courses from "components/courses";
+import EnrolledCourses from "components/enrolled-courses";
 import gql from "graphql-tag";
 import React from "react";
+import useSWR from "swr";
+
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw Error("Error");
+  }
+  const response = await res.json();
+  return response;
+};
 
 const Platform = ({ courses }) => {
+  const {
+    data: enrolledData,
+    error: coursesError,
+    mutate: coursesMutate,
+  } = useSWR([`/api/courses`], fetcher);
+  const { data: purchasesData, error: purchasesError } = useSWR(
+    [`/api/purchases`],
+    fetcher
+  );
+  const { data: videoData, error: videoError } = useSWR(
+    [`/api/videos`],
+    fetcher
+  );
+
   return (
     <Box>
       <Navbar />
-      <Courses courses={courses} />
+      {enrolledData && purchasesData && videoData && (
+        <EnrolledCourses
+          enrolledCourses={enrolledData}
+          purchasedCourses={purchasesData}
+          watchedVideos={videoData}
+          courses={courses}
+        />
+      )}
     </Box>
   );
 };
