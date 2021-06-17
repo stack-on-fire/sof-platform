@@ -1,12 +1,11 @@
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import { Image } from "@chakra-ui/image";
+import { Img } from "@chakra-ui/react";
 import {
   Box,
   Flex,
   Heading,
   HStack,
   SimpleGrid,
-  Stack,
   Text,
 } from "@chakra-ui/layout";
 import Link from "next/link";
@@ -30,7 +29,7 @@ const Courses = ({ courses }) => {
             >
               <Link as={`/course/${course.slug}`} href="/course/[slug]">
                 <Flex direction="column" height="100%">
-                  <Image
+                  <Img
                     borderRadius={10}
                     boxShadow="base"
                     src={course.cover?.url}
@@ -50,7 +49,7 @@ const Courses = ({ courses }) => {
                     {course.description}
                   </Box>
                   <HStack marginTop="auto">
-                    <Image
+                    <Img
                       borderRadius={20}
                       w={10}
                       h={10}

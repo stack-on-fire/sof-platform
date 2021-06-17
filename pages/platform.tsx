@@ -9,7 +9,9 @@ const Platform = ({ courses }) => {
   return (
     <Box>
       <Navbar />
-      <Courses courses={courses} />
+      <Box maxW={1300} mx="auto">
+        <Courses courses={courses} />
+      </Box>
     </Box>
   );
 };
