@@ -13,6 +13,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
+import splitbee from "@splitbee/web";
 import { Newsletter } from "components/newsletter";
 import { motion } from "framer-motion";
 import * as React from "react";
@@ -99,7 +100,14 @@ export const Hero = () => {
                   mb="20"
                   spacing="4"
                 >
-                  <Button size="lg" color="orange" onClick={onOpen}>
+                  <Button
+                    size="lg"
+                    color="orange"
+                    onClick={() => {
+                      onOpen();
+                      splitbee.track("Open signup form");
+                    }}
+                  >
                     Get started for free
                   </Button>
                 </Stack>
