@@ -1,4 +1,5 @@
-import { Box } from "@chakra-ui/layout";
+import { Box, SimpleGrid } from "@chakra-ui/layout";
+import { Skeleton } from "@chakra-ui/skeleton";
 import client from "apollo-client";
 import { Navbar } from "components";
 import EnrolledCourses from "components/enrolled-courses";
@@ -33,13 +34,31 @@ const Platform = ({ courses }) => {
   return (
     <Box>
       <Navbar />
-      {enrolledData && purchasesData && videoData && (
+
+      {enrolledData && purchasesData && videoData ? (
         <EnrolledCourses
           enrolledCourses={enrolledData}
           purchasedCourses={purchasesData}
           watchedVideos={videoData}
           courses={courses}
         />
+      ) : (
+        <Box pl={8} mt={4}>
+          <Skeleton height="30px" width={200} mb={4} />
+          <SimpleGrid columns={4} spacing={4}>
+            {[null, null, null]?.map(() => {
+              return (
+                <Skeleton
+                  border="1px solid"
+                  borderColor="gray.400"
+                  borderRadius={8}
+                  p={4}
+                  height="120px"
+                />
+              );
+            })}
+          </SimpleGrid>
+        </Box>
       )}
     </Box>
   );
