@@ -33,7 +33,7 @@ const options = {
   adapter: Adapters.Prisma.Adapter({
     prisma,
   }),
-  secret: process.env.SECRET,
+  secret: process.env.NEXT_AUTH_SECRET,
   callbacks: {
     session: async (session, user) => {
       session.id = user.id;
