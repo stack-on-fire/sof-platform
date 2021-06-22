@@ -1,11 +1,10 @@
 import {
   Box,
   Button,
-  Text,
   HStack,
   useColorModeValue as mode,
   VisuallyHidden,
-  IconButton,
+  Skeleton,
 } from "@chakra-ui/react";
 
 import Link from "next/link";
@@ -17,10 +16,15 @@ import { AccountSwitcher } from "components/account";
 export const Navbar = () => {
   const [session, loading] = useSession();
 
-  if (loading) {
-    return null;
-  }
-
+  const signInComponent = session ? (
+    <HStack>
+      <AccountSwitcher />
+    </HStack>
+  ) : (
+    <Link href="/signin">
+      <Button>Sign in</Button>
+    </Link>
+  );
   return (
     <Box as="header" bg={mode("white", "gray.800")} borderBottomWidth="1px">
       <Box maxW="7xl" mx="auto" py="4" px={{ base: "6", md: "8" }}>
@@ -31,15 +35,8 @@ export const Navbar = () => {
               <Logo h="6" />
             </Box>
           </Link>
-          {session ? (
-            <HStack>
-              <AccountSwitcher />
-            </HStack>
-          ) : (
-            <Link href="/signin">
-              <Button>Sign in</Button>
-            </Link>
-          )}
+          <Skeleton height="20px" />
+          {loading ? <Skeleton height="25px" width={200} /> : signInComponent}
         </HStack>
       </Box>
     </Box>

@@ -43,6 +43,7 @@ import { FaPhotoVideo } from "react-icons/fa";
 import useSWR from "swr";
 import { Tag, TagLabel, TagLeftIcon } from "@chakra-ui/tag";
 import { useSession } from "next-auth/client";
+import { Skeleton } from "@chakra-ui/react";
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -95,6 +96,63 @@ const CourseDetail = ({ course }: Props) => {
     (courseByUser) => courseByUser.strapiCourseId === Number(course.id)
   );
 
+  const enrolledComponent = isEnrolled ? (
+    <Tag size="lg" variant="subtle" colorScheme="orange">
+      <TagLeftIcon boxSize="12px" as={CheckIcon} />
+      <TagLabel>Enrolled</TagLabel>
+    </Tag>
+  ) : (
+    <Button
+      colorScheme="orange"
+      size="md"
+      onClick={async (e) => {
+        e.stopPropagation();
+        await fetch("/api/enroll", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ strapiCourseId: course.id }),
+        });
+        coursesMutate();
+      }}
+    >
+      Enroll to the course
+    </Button>
+  );
+
+  const courseControlsComponent = (
+    <>
+      <Button
+        mr={[0, 4]}
+        mb={[2, 0]}
+        colorScheme="orange"
+        size="lg"
+        onClick={async (e) => {
+          e.stopPropagation();
+          if (isEnrolled) {
+            await fetch("/api/enroll", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ strapiCourseId: course.id }),
+            });
+            coursesMutate();
+          }
+          router.push(`/course/${course.slug}/${course.modules[0].slug}`);
+        }}
+      >
+        {isEnrolled ? "Start watching" : "Enroll and start watching"}
+      </Button>
+      <Button
+        leftIcon={isPurchased ? <CheckCircleIcon /> : <UnlockIcon />}
+        colorScheme={isPurchased ? "green" : "blue"}
+        size="lg"
+        onClick={openCheckout}
+        isDisabled={isPurchased}
+      >
+        {isPurchased ? "Purchased" : "Unlock all modules"}
+      </Button>
+    </>
+  );
+
   return (
     <Box>
       <Head>
@@ -128,27 +186,31 @@ const CourseDetail = ({ course }: Props) => {
           size="md"
           icon={<ArrowBackIcon />}
         />
-        {isEnrolled ? (
-          <Tag size="lg" variant="subtle" colorScheme="orange">
-            <TagLeftIcon boxSize="12px" as={CheckIcon} />
-            <TagLabel>Enrolled</TagLabel>
-          </Tag>
+        {coursesData ? (
+          isEnrolled ? (
+            <Tag size="lg" variant="subtle" colorScheme="orange">
+              <TagLeftIcon boxSize="12px" as={CheckIcon} />
+              <TagLabel>Enrolled</TagLabel>
+            </Tag>
+          ) : (
+            <Button
+              colorScheme="orange"
+              size="md"
+              onClick={async (e) => {
+                e.stopPropagation();
+                await fetch("/api/enroll", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ strapiCourseId: course.id }),
+                });
+                coursesMutate();
+              }}
+            >
+              Enroll to the course
+            </Button>
+          )
         ) : (
-          <Button
-            colorScheme="orange"
-            size="md"
-            onClick={async (e) => {
-              e.stopPropagation();
-              await fetch("/api/enroll", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ strapiCourseId: course.id }),
-              });
-              coursesMutate();
-            }}
-          >
-            Enroll to the course
-          </Button>
+          <Skeleton height={30} width={120} />
         )}
       </Flex>
       <Heading mb={2} textAlign="center">
@@ -188,35 +250,14 @@ const CourseDetail = ({ course }: Props) => {
         </Center>
         <Center mb={8}>
           <Flex alignItems="center" direction={["column", "row"]}>
-            <Button
-              mr={[0, 4]}
-              mb={[2, 0]}
-              colorScheme="orange"
-              size="lg"
-              onClick={async (e) => {
-                e.stopPropagation();
-                if (isEnrolled) {
-                  await fetch("/api/enroll", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ strapiCourseId: course.id }),
-                  });
-                  coursesMutate();
-                }
-                router.push(`/course/${course.slug}/${course.modules[0].slug}`);
-              }}
-            >
-              {isEnrolled ? "Start watching" : "Enroll and start watching"}
-            </Button>
-            <Button
-              leftIcon={isPurchased ? <CheckCircleIcon /> : <UnlockIcon />}
-              colorScheme={isPurchased ? "green" : "blue"}
-              size="lg"
-              onClick={openCheckout}
-              isDisabled={isPurchased}
-            >
-              {isPurchased ? "Purchased" : "Unlock all modules"}
-            </Button>
+            {coursesData && purchasesData ? (
+              courseControlsComponent
+            ) : (
+              <HStack>
+                <Skeleton w={180} h={"40px"} />
+                <Skeleton w={180} h={"40px"} />
+              </HStack>
+            )}
           </Flex>
         </Center>
         <Stack maxW={700} m="auto" mb={4}>
