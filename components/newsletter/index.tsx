@@ -56,7 +56,7 @@ export const Newsletter = ({ title, cta, ctaDone, reducedFontSize }: Props) => {
   });
 
   return (
-    <Box as="section" bg={mode("gray.100", "gray.700")} py="12">
+    <Box as="section" py="12">
       <Box
         textAlign="center"
         bg={mode("white", "gray.800")}
