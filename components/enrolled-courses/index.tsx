@@ -16,9 +16,9 @@ const EnrolledCourses = ({
   const watched = watchedVideos.watchedVideosByUser;
   const router = useRouter();
   return (
-    <Box pl={8} pt={4}>
+    <Box maxW="7xl" mx="auto" p={8} pt={4}>
       <Heading mb={4}>My courses</Heading>
-      <SimpleGrid columns={4} spacing={4}>
+      <SimpleGrid columns={[1, 2, 3]} spacing={4}>
         {enrolments?.map((enrolment) => {
           const course = courses.find(
             (course) => Number(course.id) === enrolment.strapiCourseId
