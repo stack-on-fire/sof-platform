@@ -120,10 +120,22 @@ const Module = ({ module }: Props) => {
         </Flex>
         <Flex
           direction="column"
-          maxH={400}
+          maxH={300}
           minWidth={330}
-          overflow="scroll"
           marginX="auto"
+          overflowY="auto"
+          css={{
+            "&::-webkit-scrollbar": {
+              width: "0px",
+            },
+            "&::-webkit-scrollbar-track": {
+              width: "0px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              background: "white",
+              borderRadius: "24px",
+            },
+          }}
           border="1px solid"
           borderColor={useColorModeValue("gray.200", "gray.700")}
           mt={useBreakpointValue({
