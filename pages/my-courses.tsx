@@ -43,7 +43,7 @@ const Platform = ({ courses }) => {
           courses={courses}
         />
       ) : (
-        <Box maxW="7xl" mx="auto" pl={8} mt={4}>
+        <Box maxW="7xl" mx="auto" px={4} mt={4}>
           <Skeleton height="30px" width={200} mb={4} />
           <SimpleGrid spacing={4}>
             {[null, null, null]?.map(() => {
