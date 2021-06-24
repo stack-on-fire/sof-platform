@@ -18,7 +18,7 @@ export const Navbar = () => {
 
   const signInComponent = session ? (
     <HStack>
-      <AccountSwitcher />
+      <AccountSwitcher session={session} />
     </HStack>
   ) : (
     <Link href="/signin">
