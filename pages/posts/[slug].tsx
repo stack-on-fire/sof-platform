@@ -16,8 +16,29 @@ import Layout, { WEBSITE_HOST_URL } from "components/layout";
 import { MetaProps } from "../../types/layout";
 import { PostType } from "types/post";
 import { postFilePaths, POSTS_PATH } from "utils";
-import { Heading, Text } from "@chakra-ui/react";
+import { Heading, Text, useColorMode } from "@chakra-ui/react";
 import MDXComponents from "components/mdx-components";
+import { Global, css } from "@emotion/react";
+import { prismDarkTheme, prismLightTheme } from "styles/prism";
+
+const PrismStyle = ({ children }) => {
+  const { colorMode } = useColorMode();
+
+  return (
+    <>
+      <Global
+        styles={css`
+          ${colorMode === "light" ? prismLightTheme : prismDarkTheme};
+          html {
+            min-width: 356px;
+            scroll-behavior: smooth;
+          }
+        `}
+      />
+      {children}
+    </>
+  );
+};
 
 // Custom components/renderers to pass to MDX.
 // Since the MDX files aren't loaded by webpack, they have no knowledge of how
@@ -53,7 +74,9 @@ const PostPage = ({ source, frontMatter }: PostPageProps): JSX.Element => {
           {format(parseISO(frontMatter.date), "MMMM dd, yyyy")}
         </Text>
         <div>
-          <MDXRemote {...source} components={components} />
+          <PrismStyle>
+            <MDXRemote {...source} components={components} />
+          </PrismStyle>
         </div>
       </article>
     </Layout>
