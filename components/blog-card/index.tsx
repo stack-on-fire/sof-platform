@@ -40,6 +40,7 @@ export const BlogCard = (props: BlogProps) => {
           overflow="hidden"
           transition="all 0.2s"
           _hover={{ shadow: { sm: "lg" } }}
+          role="group"
         >
           <Flex direction="column">
             <Img height="60" objectFit="cover" alt={title} src={media} />
@@ -54,7 +55,13 @@ export const BlogCard = (props: BlogProps) => {
               >
                 {category}
               </Text>
-              <Heading as="h3" size="sm" mb="2" lineHeight="base">
+              <Heading
+                as="h3"
+                size="sm"
+                mb="2"
+                lineHeight="base"
+                _groupHover={{ color: "red.400" }}
+              >
                 {title}
               </Heading>
               <Text noOfLines={2} mb="8" color={mode("gray.600", "gray.400")}>

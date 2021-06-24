@@ -17,6 +17,7 @@ type IndexProps = {
 const Index = ({ posts }: IndexProps): JSX.Element => {
   return (
     <Layout px={0}>
+      <Hero />
       <Box mt={8} mb={4} px={[8, 4]}>
         <Heading>Featured articles</Heading>
         <SimpleGrid mt={8} columns={{ base: 1, md: 2 }} spacing="4" mb="10">
@@ -33,12 +34,9 @@ const Index = ({ posts }: IndexProps): JSX.Element => {
           })}
         </SimpleGrid>
       </Box>
-
-      <Hero />
       <Features />
       <Pricing />
       <Newsletter />
-      <Footer />
     </Layout>
   );
 };
