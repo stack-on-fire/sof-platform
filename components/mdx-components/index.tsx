@@ -1,3 +1,4 @@
+import { WarningIcon } from "@chakra-ui/icons";
 import {
   Box,
   Alert,
@@ -7,8 +8,14 @@ import {
   Text,
   Divider,
   useColorMode,
+  useColorModeValue,
+  Icon,
+  theme,
 } from "@chakra-ui/react";
+import { css } from "@emotion/react";
+import styled from "@emotion/styled";
 import NextLink from "next/link";
+import { AiOutlineFire } from "react-icons/ai";
 
 const CustomLink = (props) => {
   const { colorMode } = useColorMode();
@@ -34,25 +41,39 @@ const CustomLink = (props) => {
 const Quote = (props) => {
   const { colorMode } = useColorMode();
   const bgColor = {
-    light: "orange.50",
-    dark: "orange.900",
+    light: "blue.50",
+    dark: "gray.700",
   };
-
   return (
-    <Alert
-      mt={4}
-      w="98%"
-      bg={bgColor[colorMode]}
-      variant="left-accent"
-      status="info"
-      css={{
-        "> *:first-of-type": {
-          marginTop: 0,
-          marginLeft: 8,
-        },
-      }}
-      {...props}
-    />
+    <Box py={4}>
+      <Box pos="relative">
+        <Box
+          position="absolute"
+          top="-30px"
+          left="-20px"
+          backgroundColor={useColorModeValue("white", "gray.800")}
+          p={2}
+          borderRadius={40}
+        >
+          <Icon as={AiOutlineFire} w={8} h={8} color="pink.400" />
+        </Box>
+        <Box
+          p={4}
+          borderLeft="4px"
+          borderColor="pink.300"
+          mt={4}
+          w="98%"
+          bg={bgColor[colorMode]}
+          css={{
+            "> *:first-of-type": {
+              marginTop: 0,
+              marginLeft: 8,
+            },
+          }}
+          {...props}
+        />
+      </Box>
+    </Box>
   );
 };
 
@@ -111,6 +132,51 @@ const Hr = () => {
   return <Divider borderColor={borderColor[colorMode]} my={4} w="100%" />;
 };
 
+const StyledUl = styled(Box)`
+  && {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 1em;
+    text-indent: -1em;
+    > li {
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+
+      &:before {
+        font-size: 25px;
+        padding-right: 5px;
+        content: "➞";
+        color: ${theme.colors.pink[400]};
+        filter: grayscale(20%);
+      }
+    }
+  }
+`;
+
+const StyledOl = styled(Box)`
+  && {
+    list-style: none;
+    counter-reset: item;
+    padding-left: 1em;
+    text-indent: -0.6em;
+    > li {
+      counter-increment: item;
+      margin-bottom: 5px;
+      &:before {
+        font-size: 20px;
+        font-weight: bold;
+        color: ${theme.colors.pink[400]};
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+        margin-right: 10px;
+        content: counter(item) ".";
+        text-align: center;
+        display: inline-block;
+      }
+    }
+  }
+`;
+
 const MDXComponents = {
   h1: (props) => <Heading as="h1" size="xl" my={4} {...props} />,
   h2: (props) => <DocsHeading as="h2" size="lg" fontWeight="bold" {...props} />,
@@ -127,8 +193,8 @@ const MDXComponents = {
   p: (props) => (
     <Text fontSize="lg" as="p" mt={0} lineHeight="tall" {...props} />
   ),
-  ul: (props) => <Box as="ul" pt={2} pl={4} ml={2} {...props} />,
-  ol: (props) => <Box as="ol" pt={2} pl={4} ml={2} {...props} />,
+  ul: (props) => <StyledUl as="ul" pt={2} pl={4} ml={2} {...props} />,
+  ol: (props) => <StyledOl as="ol" pt={2} pl={4} ml={2} {...props} />,
   li: (props) => <Box as="li" pb={1} {...props} />,
   blockquote: Quote,
 };
