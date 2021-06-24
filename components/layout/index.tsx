@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import { Footer } from "components/footer";
 import Head from "components/head";
 import { Navbar } from "components/navbar";
 import React from "react";
@@ -24,6 +25,9 @@ const Layout = ({ children, customMeta, px }: LayoutProps): JSX.Element => {
           {children}
         </Box>
       </main>
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };
