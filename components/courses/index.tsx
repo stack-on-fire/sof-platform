@@ -15,7 +15,7 @@ import { Course } from "./types";
 
 const Courses = ({ courses }) => {
   return (
-    <Box p={4}>
+    <Box>
       <SimpleGrid columns={[1, 2, 2, 3]} spacing={4}>
         {courses.map((course: Course) => {
           return (

@@ -22,8 +22,9 @@ type Props = {
 
 export const Newsletter = ({ title, cta, ctaDone, reducedFontSize }: Props) => {
   const [email, setEmail] = React.useState("");
-  const [emailFromLocalStorage, setEmailFromLocalStorage] =
-    React.useState<string | null>(null);
+  const [emailFromLocalStorage, setEmailFromLocalStorage] = React.useState<
+    string | null
+  >(null);
   React.useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("subscribedEmail") !== null) {
@@ -47,7 +48,6 @@ export const Newsletter = ({ title, cta, ctaDone, reducedFontSize }: Props) => {
   };
   const { mutate, data, isLoading } = useMutation(subscribeToEmailList, {
     onSuccess: (res) => {
-      console.log(res);
       if (res.status === 200) {
         localStorage.setItem("subscribedEmail", email);
         setEmailFromLocalStorage(email);

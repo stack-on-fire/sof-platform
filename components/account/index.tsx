@@ -17,8 +17,7 @@ import { useRouter } from "next/dist/client/router";
 import { useSession } from "next-auth/client";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-export const AccountSwitcher = () => {
-  const [session, loading] = useSession();
+export const AccountSwitcher = ({ session }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   const router = useRouter();
