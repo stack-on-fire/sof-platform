@@ -3,6 +3,7 @@ import { Skeleton } from "@chakra-ui/skeleton";
 import client from "apollo-client";
 import { Navbar } from "components";
 import EnrolledCourses from "components/enrolled-courses";
+import Layout from "components/layout";
 import gql from "graphql-tag";
 import React from "react";
 import useSWR from "swr";
@@ -32,35 +33,35 @@ const Platform = ({ courses }) => {
   );
 
   return (
-    <Box>
-      <Navbar />
-
-      {enrolledData && purchasesData && videoData ? (
-        <EnrolledCourses
-          enrolledCourses={enrolledData}
-          purchasedCourses={purchasesData}
-          watchedVideos={videoData}
-          courses={courses}
-        />
-      ) : (
-        <Box maxW="7xl" mx="auto" pl={8} mt={4}>
-          <Skeleton height="30px" width={200} mb={4} />
-          <SimpleGrid spacing={4}>
-            {[null, null, null]?.map(() => {
-              return (
-                <Skeleton
-                  border="1px solid"
-                  borderColor="gray.400"
-                  borderRadius={8}
-                  p={4}
-                  height="120px"
-                />
-              );
-            })}
-          </SimpleGrid>
-        </Box>
-      )}
-    </Box>
+    <Layout px={0}>
+      <Box mt={8} mb={4} px={[8, 4]} minH="100vh">
+        {enrolledData && purchasesData && videoData ? (
+          <EnrolledCourses
+            enrolledCourses={enrolledData}
+            purchasedCourses={purchasesData}
+            watchedVideos={videoData}
+            courses={courses}
+          />
+        ) : (
+          <Box>
+            <Skeleton height="30px" width={200} mb={4} />
+            <SimpleGrid spacing={4}>
+              {[null, null, null]?.map(() => {
+                return (
+                  <Skeleton
+                    border="1px solid"
+                    borderColor="gray.400"
+                    borderRadius={8}
+                    p={4}
+                    height="120px"
+                  />
+                );
+              })}
+            </SimpleGrid>
+          </Box>
+        )}
+      </Box>
+    </Layout>
   );
 };
 

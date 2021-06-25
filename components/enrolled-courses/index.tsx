@@ -16,7 +16,7 @@ const EnrolledCourses = ({
   const watched = watchedVideos.watchedVideosByUser;
   const router = useRouter();
   return (
-    <Box maxW="7xl" mx="auto" p={8} pt={4}>
+    <>
       <Heading mb={4}>My courses</Heading>
       <SimpleGrid columns={[1, 2, 3]} spacing={4}>
         {enrolments?.map((enrolment) => {
@@ -75,7 +75,7 @@ const EnrolledCourses = ({
           );
         })}
       </SimpleGrid>
-    </Box>
+    </>
   );
 };
 

@@ -8,7 +8,7 @@ import React from "react";
 
 const Platform = ({ courses }) => {
   return (
-    <Layout>
+    <Layout px={0}>
       <Courses courses={courses} />
     </Layout>
   );

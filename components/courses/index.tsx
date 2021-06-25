@@ -16,8 +16,8 @@ import Layout from "components/layout";
 
 const Courses = ({ courses }) => {
   return (
-    <Layout>
-      <Heading>All courses</Heading>
+    <Box mt={8} mb={4} px={[8, 4]} minH="100vh">
+      <Heading mb={8}>All courses</Heading>
       <SimpleGrid columns={[1, 2, 2, 3]} spacing={4}>
         {courses.map((course: Course) => {
           return (
@@ -67,7 +67,7 @@ const Courses = ({ courses }) => {
           );
         })}
       </SimpleGrid>
-    </Layout>
+    </Box>
   );
 };
 
