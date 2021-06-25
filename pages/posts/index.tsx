@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Link as ChakraLink } from "@chakra-ui/layout";
-import { Hero, Newsletter, Features, Footer, Pricing } from "components";
 import { getAllPosts } from "lib/api";
 import { GetStaticProps } from "next";
 import { PostType } from "types/post";
@@ -23,20 +22,20 @@ type IndexProps = {
 const Index = ({ posts }: IndexProps): JSX.Element => {
   return (
     <Layout px={0}>
-      <Hero />
-      <Box mt={8} mb={4} px={[8, 4]}>
+      <Box mt={8} mb={4} px={[8, 4]} minH="100vh">
         <HStack>
-          <Heading>Featured articles</Heading>
-          <Link href="/posts">
-            <ChakraLink color={useColorModeValue("gray.600", "gray.400")}>
-              All articles
-            </ChakraLink>
-          </Link>
+          <Heading>All articles</Heading>
         </HStack>
-        <SimpleGrid mt={8} columns={{ base: 1, md: 2 }} spacing="4" mb="10">
+        <SimpleGrid
+          mt={8}
+          columns={{ base: 1, md: 2, lg: 3 }}
+          spacing="4"
+          mb="10"
+        >
           {posts.map((post) => {
             return (
               <BlogCard
+                hideCover
                 slug={post.slug}
                 content={post.content}
                 media={post.image}
@@ -47,9 +46,6 @@ const Index = ({ posts }: IndexProps): JSX.Element => {
           })}
         </SimpleGrid>
       </Box>
-      <Features />
-      {/* <Pricing /> */}
-      <Newsletter />
     </Layout>
   );
 };
@@ -65,7 +61,7 @@ export const getStaticProps: GetStaticProps = async () => {
   ]);
 
   return {
-    props: { posts: posts.slice(0, 2) },
+    props: { posts },
   };
 };
 

@@ -16,6 +16,7 @@ import readingTime from "reading-time";
 import useSWR from "swr";
 
 interface BlogProps {
+  hideCover?: boolean;
   category?: string;
   title: string;
   content: any;
@@ -60,7 +61,9 @@ export const BlogCard = (props: BlogProps) => {
           role="group"
         >
           <Flex direction="column">
-            <Img height="60" objectFit="cover" alt={title} src={media} />
+            {!props.hideCover && (
+              <Img height="60" objectFit="cover" alt={title} src={media} />
+            )}
             <Flex direction="column" px={{ sm: "6" }} py="5">
               <Text
                 casing="uppercase"

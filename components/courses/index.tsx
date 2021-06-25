@@ -12,10 +12,12 @@ import Link from "next/link";
 
 import React from "react";
 import { Course } from "./types";
+import Layout from "components/layout";
 
 const Courses = ({ courses }) => {
   return (
-    <Box>
+    <Layout>
+      <Heading>All courses</Heading>
       <SimpleGrid columns={[1, 2, 2, 3]} spacing={4}>
         {courses.map((course: Course) => {
           return (
@@ -65,7 +67,7 @@ const Courses = ({ courses }) => {
           );
         })}
       </SimpleGrid>
-    </Box>
+    </Layout>
   );
 };
 
