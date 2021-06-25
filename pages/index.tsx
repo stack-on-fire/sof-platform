@@ -35,7 +35,7 @@ const Index = ({ posts }: IndexProps): JSX.Element => {
         </SimpleGrid>
       </Box>
       <Features />
-      <Pricing />
+      {/* <Pricing /> */}
       <Newsletter />
     </Layout>
   );
