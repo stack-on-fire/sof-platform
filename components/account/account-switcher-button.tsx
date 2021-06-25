@@ -32,7 +32,7 @@ export const AccountSwitcherButton = (props: FlexProps & any) => {
       <HStack flex="1" spacing={2}>
         <Avatar
           size={40}
-          name="Maria Mitchell"
+          name={props.user.email}
           variant="ring"
           colors={["#B31237", "#F03813", "#FF8826", "#FFB914", "#2C9FA3"]}
         />

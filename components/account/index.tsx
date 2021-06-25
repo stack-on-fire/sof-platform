@@ -14,7 +14,6 @@ import * as React from "react";
 import { AccountSwitcherButton } from "./account-switcher-button";
 import { signOut } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
-import { useSession } from "next-auth/client";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 export const AccountSwitcher = ({ session }) => {
@@ -47,7 +46,7 @@ export const AccountSwitcher = ({ session }) => {
           My courses
         </MenuItem>
         <MenuItem onClick={() => router.push("/")}>Learn more</MenuItem>
-        {/* <MenuItem onClick={() => router.push("/settings")}>Settings</MenuItem> */}
+        <MenuItem onClick={() => router.push("/settings")}>Settings</MenuItem>
         <MenuDivider />
         <MenuItem
           onClick={() => {
