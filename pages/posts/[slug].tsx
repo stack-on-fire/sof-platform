@@ -16,10 +16,22 @@ import Layout, { WEBSITE_HOST_URL } from "components/layout";
 import { MetaProps } from "../../types/layout";
 import { PostType } from "types/post";
 import { postFilePaths, POSTS_PATH } from "utils";
-import { Heading, Text, useColorMode } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  HStack,
+  Skeleton,
+  Text,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import MDXComponents from "components/mdx-components";
 import { Global, css } from "@emotion/react";
 import { prismDarkTheme, prismLightTheme } from "styles/prism";
+import { useEffect } from "react";
+import { BsClockFill, BsEye, BsEyeFill } from "react-icons/bs";
+import useSWR from "swr";
+import readingTime from "reading-time";
 
 const PrismStyle = ({ children }) => {
   const { colorMode } = useColorMode();
@@ -54,9 +66,25 @@ const components = {
 type PostPageProps = {
   source: MDXRemoteSerializeResult;
   frontMatter: PostType;
+  slug: string;
+  readingTime: String;
 };
 
-const PostPage = ({ source, frontMatter }: PostPageProps): JSX.Element => {
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw Error("Error");
+  }
+  const response = await res.json();
+  return response;
+};
+
+const PostPage = ({
+  source,
+  frontMatter,
+  slug,
+  readingTime,
+}: PostPageProps): JSX.Element => {
   const customMeta: MetaProps = {
     title: `${frontMatter.title} - Stack on Fire 🔥`,
     description: frontMatter.description,
@@ -64,15 +92,57 @@ const PostPage = ({ source, frontMatter }: PostPageProps): JSX.Element => {
     date: frontMatter.date,
     type: "article",
   };
+
+  const { data: hitsData, error: hitsError } = useSWR(
+    [`/api/getHitsForBlogposts/${slug}`],
+    fetcher
+  );
+
+  console.log(frontMatter.content);
+
+  const hits = hitsData?.result[0][slug];
+
+  useEffect(() => {
+    async function registerHit() {
+      console.log(frontMatter);
+      const result = await fetch("/api/bumpUpBlogpostHit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug: slug }),
+      });
+    }
+    registerHit();
+  }, []);
   return (
     <Layout customMeta={customMeta}>
       <article>
         <Heading mt={8} mb={2}>
           {frontMatter.title}
         </Heading>
-        <Text mb={4}>
-          {format(parseISO(frontMatter.date), "MMMM dd, yyyy")}
-        </Text>
+        <HStack alignItems="center" mb={4}>
+          <Text color={useColorModeValue("gray.500", "gray.400")}>
+            {format(parseISO(frontMatter.date), "MMMM dd, yyyy")}
+          </Text>
+          <Text color={useColorModeValue("gray.300", "gray.600")}>//</Text>
+          <HStack color={useColorModeValue("gray.500", "gray.400")}>
+            <HStack spacing={0}>
+              <Box as={BsEyeFill} display="inline-block" me="2" opacity={0.4} />
+              {hits ? <Text>{hits}</Text> : <Skeleton height={3} width={4} />}
+            </HStack>
+            <HStack
+              spacing={0}
+              color={useColorModeValue("gray.500", "gray.400")}
+            >
+              <Box
+                as={BsClockFill}
+                display="inline-block"
+                me="2"
+                opacity={0.4}
+              />
+              <Text>{readingTime}</Text>
+            </HStack>
+          </HStack>
+        </HStack>
         <div>
           <PrismStyle>
             <MDXRemote {...source} components={components} />
@@ -102,6 +172,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       source: mdxSource,
       frontMatter: data,
+      slug: params.slug,
+      readingTime: readingTime(content).text,
     },
   };
 };

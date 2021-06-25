@@ -5,13 +5,15 @@ import {
   HStack,
   Img,
   LinkBox,
+  Skeleton,
   Text,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { BsClockFill } from "react-icons/bs";
+import { BsClockFill, BsEyeFill } from "react-icons/bs";
 import Link from "next/link";
 import readingTime from "reading-time";
+import useSWR from "swr";
 
 interface BlogProps {
   category?: string;
@@ -26,8 +28,23 @@ interface BlogProps {
   };
 }
 
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw Error("Error");
+  }
+  const response = await res.json();
+  return response;
+};
+
 export const BlogCard = (props: BlogProps) => {
-  const { title, description, media, author, slug, category, content } = props;
+  const { title, description, media, slug, category, content } = props;
+  const { data: hitsData, error: hitsError } = useSWR(
+    [`/api/getHitsForBlogposts/${slug}`],
+    fetcher
+  );
+
+  const hits = hitsData?.result[0][slug];
 
   return (
     <Link as={`/posts/${slug}`} href="/posts/[slug]">
@@ -67,12 +84,26 @@ export const BlogCard = (props: BlogProps) => {
               <Text noOfLines={2} mb="8" color={mode("gray.600", "gray.400")}>
                 {description}
               </Text>
-              <Flex
-                align="baseline"
-                justify="space-between"
+              <HStack
+                alignItems="center"
                 fontSize="sm"
                 color={mode("gray.600", "gray.400")}
+                spacing={4}
               >
+                <HStack spacing={0}>
+                  <Box
+                    as={BsEyeFill}
+                    display="inline-block"
+                    me="2"
+                    opacity={0.4}
+                  />
+
+                  {hits ? (
+                    <Text>{hits}</Text>
+                  ) : (
+                    <Skeleton height={3} width={4} />
+                  )}
+                </HStack>
                 <HStack spacing={0}>
                   <Box
                     as={BsClockFill}
@@ -82,7 +113,7 @@ export const BlogCard = (props: BlogProps) => {
                   />
                   <Text>{readingTime(content).text}</Text>
                 </HStack>
-              </Flex>
+              </HStack>
             </Flex>
           </Flex>
         </LinkBox>

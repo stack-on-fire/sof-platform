@@ -12,7 +12,7 @@ import {
   Icon,
   theme,
 } from "@chakra-ui/react";
-import { css } from "@emotion/react";
+
 import styled from "@emotion/styled";
 import NextLink from "next/link";
 import { AiOutlineFire } from "react-icons/ai";
