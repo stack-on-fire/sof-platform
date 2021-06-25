@@ -4,6 +4,7 @@ import {
   Heading,
   Stack,
   Text,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import {
@@ -48,7 +49,12 @@ export const Hero = () => {
 
   return (
     <Box>
-      <Box as="section" bg="gray.800" color="white" pt="7.5rem">
+      <Box
+        as="section"
+        bg={useColorModeValue("white", "gray.800")}
+        color="white"
+        pt="7.5rem"
+      >
         <Box
           maxW={{ base: "xl", md: "7xl" }}
           mx="auto"

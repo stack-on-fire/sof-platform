@@ -16,6 +16,7 @@ export const Cta = (props: HTMLChakraProps<"button">) => {
       rounded="lg"
       outline={0}
       bg="orange.500"
+      color="white"
       _focus={{ shadow: "outline" }}
       _active={{ transform: "translateY(2px)" }}
       _hover={{ bg: "orange.600" }}

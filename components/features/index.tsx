@@ -1,4 +1,10 @@
-import { Box, Heading, SimpleGrid, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  SimpleGrid,
+  Stack,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import * as React from "react";
 import { BiDirections, BiHappyBeaming } from "react-icons/bi";
 import { FaGraduationCap, FaRegLifeRing } from "react-icons/fa";
@@ -10,7 +16,7 @@ import { Testimonial } from "./testimonial";
 export const Features = () => {
   return (
     <Box as="section" pb="24">
-      <Box bg="gray.800" color="white" pt="24" pb="12rem">
+      <Box bg={useColorModeValue("white", "gray.800")} pt="24" pb="12rem">
         <Box
           maxW={{ base: "xl", md: "7xl" }}
           mx="auto"
