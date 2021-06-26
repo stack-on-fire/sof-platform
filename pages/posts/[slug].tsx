@@ -88,7 +88,7 @@ const PostPage = ({
   const customMeta: MetaProps = {
     title: `${frontMatter.title} - Stack on Fire 🔥`,
     description: frontMatter.description,
-    image: `${WEBSITE_HOST_URL}${frontMatter.image}`,
+    image: `https://sof-og-image.vercel.app/${frontMatter.title}.png?theme=dark&md=1&fontSize=100px&images=https://www.stackonfire.dev/logo.svg`,
     date: frontMatter.date,
     type: "article",
   };
@@ -97,8 +97,6 @@ const PostPage = ({
     [`/api/getHitsForBlogposts/${slug}`],
     fetcher
   );
-
-  console.log(frontMatter.content);
 
   const hits = hitsData?.result[0][slug];
 
