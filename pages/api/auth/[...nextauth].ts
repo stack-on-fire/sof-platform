@@ -36,7 +36,6 @@ const options = {
   secret: process.env.NEXT_AUTH_SECRET,
   callbacks: {
     session: async (session, user) => {
-      console.log(user);
       session.id = user.id;
       session.user.createdAt = user.createdAt;
       return Promise.resolve(session);

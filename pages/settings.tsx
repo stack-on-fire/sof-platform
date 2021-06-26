@@ -3,7 +3,6 @@ import Layout from "components/layout";
 import { UserCard } from "components/user-card";
 import { useSession } from "next-auth/client";
 import React from "react";
-import Avatar from "boring-avatars";
 import { Box } from "@chakra-ui/react";
 
 const Settings = () => {
