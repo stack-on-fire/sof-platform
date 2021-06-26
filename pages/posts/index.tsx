@@ -10,6 +10,7 @@ import {
   Heading,
   HStack,
   SimpleGrid,
+  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { BlogCard } from "components/blog-card";
@@ -23,8 +24,15 @@ const Index = ({ posts }: IndexProps): JSX.Element => {
   return (
     <Layout px={0}>
       <Box mt={8} mb={4} px={[8, 4]} minH="100vh">
-        <HStack>
+        <HStack alignItems="center">
           <Heading>All articles</Heading>
+          <Text
+            fontSize="2xl"
+            fontWeight="medium"
+            color={useColorModeValue("gray.400", "gray.500")}
+          >
+            {posts.length}
+          </Text>
         </HStack>
         <SimpleGrid
           mt={8}
