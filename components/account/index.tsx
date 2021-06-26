@@ -45,8 +45,8 @@ export const AccountSwitcher = ({ session }) => {
         <MenuItem onClick={() => router.push("/my-courses")}>
           My courses
         </MenuItem>
-        <MenuItem onClick={() => router.push("/")}>Learn more</MenuItem>
         <MenuItem onClick={() => router.push("/settings")}>Settings</MenuItem>
+        <MenuItem onClick={() => router.push("/")}>Learn more</MenuItem>
         <MenuDivider />
         <MenuItem
           onClick={() => {
