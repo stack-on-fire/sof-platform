@@ -125,7 +125,11 @@ const PostPage = ({
           <HStack color={useColorModeValue("gray.500", "gray.400")}>
             <HStack spacing={0}>
               <Box as={BsEyeFill} display="inline-block" me="2" opacity={0.4} />
-              {hits ? <Text>{hits}</Text> : <Skeleton height={3} width={4} />}
+              {hits !== undefined ? (
+                <Text>{hits}</Text>
+              ) : (
+                <Skeleton height={3} width={4} />
+              )}
             </HStack>
             <HStack
               spacing={0}

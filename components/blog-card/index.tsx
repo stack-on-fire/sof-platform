@@ -101,7 +101,7 @@ export const BlogCard = (props: BlogProps) => {
                     opacity={0.4}
                   />
 
-                  {hits ? (
+                  {hits !== undefined ? (
                     <Text>{hits}</Text>
                   ) : (
                     <Skeleton height={3} width={4} />
