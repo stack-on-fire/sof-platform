@@ -9,6 +9,7 @@ import {
   Text,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
+import Image from "next/image";
 import * as React from "react";
 import { BsClockFill, BsEyeFill } from "react-icons/bs";
 import Link from "next/link";
@@ -62,7 +63,13 @@ export const BlogCard = (props: BlogProps) => {
         >
           <Flex direction="column">
             {!props.hideCover && (
-              <Img height="60" objectFit="cover" alt={title} src={media} />
+              <Image
+                layout="responsive"
+                height={620}
+                width={1240}
+                alt={title}
+                src={media}
+              />
             )}
             <Flex direction="column" px={{ sm: "6" }} py="5">
               <Text
