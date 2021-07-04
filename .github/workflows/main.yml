@@ -28,3 +28,15 @@ jobs:
         with:
           build: npm run build
           start: npm start
+      - name: Storing screenshot artifacts
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+       - name: Storing video artifacts
+        uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
