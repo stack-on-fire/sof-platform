@@ -18,7 +18,7 @@ import client from "apollo-client";
 import ReactPlayer from "react-player";
 import VisuallyHidden from "@chakra-ui/visually-hidden";
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import { customFormatDuration } from "utils";
+import { customFormatDuration } from "utils/custom-format-duration";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Switch } from "@chakra-ui/switch";
 import { useBreakpointValue } from "@chakra-ui/media-query";

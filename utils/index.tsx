@@ -1,4 +1,3 @@
-import { intervalToDuration, formatDuration } from "date-fns";
 import fs from "fs";
 import path from "path";
 
@@ -10,14 +9,3 @@ export const postFilePaths = fs
   .readdirSync(POSTS_PATH)
   // Only include md(x) files
   .filter((path) => /\.mdx?$/.test(path));
-
-export const customFormatDuration = ({
-  start,
-  end,
-}: {
-  start: number;
-  end: number;
-}) => {
-  const durations = intervalToDuration({ start, end });
-  return formatDuration(durations);
-};
