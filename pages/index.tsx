@@ -62,10 +62,17 @@ export const getStaticProps: GetStaticProps = async () => {
     "title",
     "image",
     "content",
+    "isTestPost",
   ]);
 
   return {
-    props: { posts: posts.slice(0, 2) },
+    props: {
+      posts: posts
+        .filter((post) =>
+          process.env.NODE_ENV === "development" ? post : !!post.isTestPost
+        )
+        .slice(0, 2),
+    },
   };
 };
 
