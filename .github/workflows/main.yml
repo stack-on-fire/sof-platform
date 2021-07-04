@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Log env
-        run: echo "${NEXT_PUBLIC_STRAPI_API_URL}&${NEXT_PUBLIC_STRAPI_API_GRAPHQL&}&${DATABASE_URL}"
+        run: echo "${NEXT_PUBLIC_STRAPI_API_URL}&${NEXT_PUBLIC_STRAPI_API_GRAPHQL}&${DATABASE_URL}"
       - name: Checkout
         uses: actions/checkout@v2
       # Install NPM dependencies, cache them correctly
