@@ -48,6 +48,7 @@ export const CardWithAvatar = (props: CardWithAvatarProps) => {
           borderRadius={100}
           borderColor={useColorModeValue("white", "gray.700")}
           size="xl"
+          marginX="auto"
         >
           <BoringAvatar
             size={80}

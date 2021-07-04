@@ -38,10 +38,18 @@ export const UserCard = ({ name }) => {
         }
       >
         <CardContent>
-          <Heading size="lg" fontWeight="extrabold" letterSpacing="tight">
+          <Heading
+            textAlign="center"
+            size="lg"
+            fontWeight="extrabold"
+            letterSpacing="tight"
+          >
             {name}
           </Heading>
-          <Text color={useColorModeValue("gray.600", "gray.400")}>
+          <Text
+            textAlign="center"
+            color={useColorModeValue("gray.600", "gray.400")}
+          >
             Learning @ Stack on Fire 🔥
           </Text>
           {session?.user && (
