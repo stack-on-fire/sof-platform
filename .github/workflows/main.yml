@@ -28,6 +28,11 @@ jobs:
         with:
           build: npm run build
           start: npm start
+        env:
+          CYPRESS__GITHUB_USER: test@stackonfire.dev
+          CYPRESS__GITHUB_PASSWORD: cmk9CTF8fdn7gvr-qyv
+          CYPRESS__COOKIE_NAME: next-auth.session-token
+          CYPRESS__SITE_NAME: http://localhost:3000
       - name: Storing screenshot artifacts
         uses: actions/upload-artifact@v1
         if: failure()
