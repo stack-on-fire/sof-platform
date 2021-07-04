@@ -15,6 +15,7 @@ export const AccountSwitcherButton = (props: FlexProps & any) => {
 
   return (
     <Flex
+      className="signed-in"
       as="button"
       {...buttonProps}
       display="flex"
@@ -32,13 +33,13 @@ export const AccountSwitcherButton = (props: FlexProps & any) => {
       <HStack flex="1" spacing={2}>
         <Avatar
           size={40}
-          name={props.user.email}
+          name={props.user.email || props.user.name}
           variant="ring"
           colors={["#B31237", "#F03813", "#FF8826", "#FFB914", "#2C9FA3"]}
         />
         <Box textAlign="start">
           <Box isTruncated fontWeight="semibold">
-            {props.user.email}
+            {props.user.email || props.user.name}
           </Box>
         </Box>
         <Box fontSize="lg" color="gray.400">

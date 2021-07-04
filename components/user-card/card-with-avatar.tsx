@@ -52,7 +52,7 @@ export const CardWithAvatar = (props: CardWithAvatarProps) => {
         >
           <BoringAvatar
             size={80}
-            name={session?.user?.email}
+            name={session?.user?.email || session?.user?.name}
             variant="ring"
             colors={["#B31237", "#F03813", "#FF8826", "#FFB914", "#2C9FA3"]}
           />
