@@ -8,8 +8,10 @@ on:
 env:
   NEXT_PUBLIC_STRAPI_API_URL: http://188.166.82.23:1337
   NEXT_PUBLIC_STRAPI_API_GRAPHQL: http://188.166.82.23:1337/graphql
-  DATABASE_URL: ${{ secrets.DATABASE_URL_STAGING }}
   NEXTAUTH_URL: https://dev.stackonfire.dev/api/auth
+  GITHUB_CLIENT_ID: 416bc2111738cc80714a
+  GITHUB_CLIENT_SECRET: ${{ secrets.GH_CLIENT_SECRET }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL_STAGING }}
 
 jobs:
   cypress-run:
