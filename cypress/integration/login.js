@@ -16,6 +16,7 @@ describe("Login page", () => {
       headless: true,
       logs: true,
       isPopup: true,
+      popupDelay: 3000, // <--- this is important !!!
       loginSelector: `.gh-sign-in`,
       postLoginSelector: ".signed-in",
     };
