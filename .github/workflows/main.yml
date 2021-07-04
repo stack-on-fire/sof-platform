@@ -34,7 +34,7 @@ jobs:
         with:
           name: cypress-screenshots
           path: cypress/screenshots
-       - name: Storing video artifacts
+      - name: Storing video artifacts
         uses: actions/upload-artifact@v1
         if: always()
         with:
