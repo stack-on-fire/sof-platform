@@ -1,24 +1,24 @@
 describe("Login page", () => {
   before(() => {
     cy.log(`Visiting https://company.tld`);
-    cy.visit("/api/auth/signin");
+    cy.visit("/signin");
   });
   it("Login with Github", () => {
     const username = Cypress.env("GITHUB_USER");
     const password = Cypress.env("GITHUB_PASSWORD");
-    const loginUrl = `${Cypress.env("SITE_NAME")}/api/auth/signin`;
+    const loginUrl = `${Cypress.env("SITE_NAME")}/signin`;
     const cookieName = Cypress.env("COOKIE_NAME");
 
     const socialLoginOptions = {
       username,
       password,
       loginUrl,
-      headless: true,
+      headless: false,
       logs: true,
       isPopup: true,
-      args: ["--no-sandbox"],
+      popupDelay: 3000,
       screenshotOnError: true,
-      loginSelector: `[action="http://localhost:3000/api/auth/signin/github"]`,
+      loginSelector: `.gh-sign-in`,
       postLoginSelector: ".signed-in",
     };
 
