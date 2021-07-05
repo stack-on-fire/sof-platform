@@ -9,20 +9,16 @@ describe("Login page", () => {
     const loginUrl = `${Cypress.env("SITE_NAME")}/api/auth/signin`;
     const cookieName = Cypress.env("COOKIE_NAME");
 
-    const selector = `[action="${Cypress.env(
-      "SITE_NAME"
-    )}/api/auth/signin/github"]`;
-
-    console.log(`[${selector}]`);
     const socialLoginOptions = {
       username,
       password,
       loginUrl,
-      headless: false,
+      headless: true,
       logs: true,
+      isPopup: true,
       args: ["--no-sandbox"],
       screenshotOnError: true,
-      loginSelector: `${selector}`,
+      loginSelector: `[action="http://localhost:3000/api/auth/signin/github"]`,
       postLoginSelector: ".signed-in",
     };
 
