@@ -29,6 +29,7 @@ jobs:
           build: npm run build
           start: npm start
         env:
+          DEBUG: "cypress:*"
           CYPRESS_GITHUB_USER: test@stackonfire.dev
           CYPRESS_GITHUB_PASSWORD: cmk9CTF8fdn7gvr-qyv
           CYPRESS_COOKIE_NAME: next-auth.session-token
