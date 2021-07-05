@@ -65,7 +65,9 @@ export const Login = ({ variant }: Props) => {
         <SimpleGrid mt="6" columns={3} spacing="3">
           <Button
             className="gh-sign-in"
-            onClick={() => signIn("github")}
+            onClick={() =>
+              signIn("github", { callbackUrl: "https://dev.stackonfire.dev" })
+            }
             variant="outline"
           >
             <VisuallyHidden> Github</VisuallyHidden>

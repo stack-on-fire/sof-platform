@@ -15,8 +15,8 @@ describe("Login page", () => {
       loginUrl,
       headless: false,
       logs: true,
-      isPopup: true,
-      popupDelay: 3000, // <--- this is important !!!
+      args: ["--no-sandbox"],
+      screenshotOnError: true,
       loginSelector: `.gh-sign-in`,
       postLoginSelector: ".signed-in",
     };
