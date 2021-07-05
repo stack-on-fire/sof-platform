@@ -13,7 +13,7 @@ describe("Login page", () => {
       username,
       password,
       loginUrl,
-      headless: true,
+      headless: false,
       logs: true,
       isPopup: true,
       popupDelay: 3000, // <--- this is important !!!
