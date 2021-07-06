@@ -12,8 +12,6 @@ env:
   GITHUB_CLIENT_ID: 416bc2111738cc80714a
   GITHUB_CLIENT_SECRET: ${{ secrets.GH_CLIENT_SECRET }}
   DATABASE_URL: ${{ secrets.DATABASE_URL_STAGING }}
-  IS_CI: ci
-
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
@@ -34,6 +32,7 @@ jobs:
           CYPRESS_GITHUB_PASSWORD: cmk9CTF8fdn7gvr-qyv
           CYPRESS_COOKIE_NAME: next-auth.session-token
           CYPRESS_SITE_NAME: http://localhost:3000
+          IS_CI: ci
       - name: Storing screenshot artifacts
         uses: actions/upload-artifact@v1
         if: failure()
