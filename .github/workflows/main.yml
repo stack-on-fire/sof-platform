@@ -12,7 +12,7 @@ env:
   GITHUB_CLIENT_ID: 416bc2111738cc80714a
   GITHUB_CLIENT_SECRET: ${{ secrets.GH_CLIENT_SECRET }}
   DATABASE_URL: ${{ secrets.DATABASE_URL_STAGING }}
-  IS_CI: true
+  IS_CI: ci
 
 jobs:
   cypress-run:

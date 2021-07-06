@@ -10,7 +10,7 @@ describe("Login page", () => {
     const cookieName = Cypress.env("COOKIE_NAME");
     const isCI = Cypress.env("IS_CI");
 
-    cy.skipOn(!!isCI);
+    cy.skipOn(isCI === "ci");
 
     const socialLoginOptions = {
       username,
