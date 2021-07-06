@@ -8,6 +8,9 @@ describe("Login page", () => {
     const password = Cypress.env("GITHUB_PASSWORD");
     const loginUrl = `${Cypress.env("SITE_NAME")}/signin`;
     const cookieName = Cypress.env("COOKIE_NAME");
+    const isCI = Cypress.env("IS_CI");
+
+    cy.skipOn(isCI);
 
     const socialLoginOptions = {
       username,
