@@ -25,8 +25,8 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          build: npm run build
-          start: NEXT_PUBLIC_ENV=test npm start
+          build: npm run build:test
+          start: npm start
         env:
           CYPRESS_GITHUB_USER: test@stackonfire.dev
           CYPRESS_GITHUB_PASSWORD: cmk9CTF8fdn7gvr-qyv
