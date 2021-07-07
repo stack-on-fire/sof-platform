@@ -7,7 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { Provider } from "next-auth/client";
 import { useEffect } from "react";
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.NEXT_PUBLIC_ENV === "test") {
   require("mocks");
 }
 

@@ -8,9 +8,7 @@ describe("explosion tests", () => {
   it("routes for signed in user", () => {
     cy.visit("/settings");
     cy.visit("/platform");
-    cy.wait(1000);
     cy.visit("/posts");
     cy.visit("/my-courses");
-    cy.wait(1000);
   });
 });
