@@ -15,6 +15,7 @@ import { UserInfo } from "./user-info";
 
 export const UserCard = ({ name }) => {
   const [session] = useSession();
+
   return (
     <Box as="section" pt="20" pb="12" position="relative">
       <Box

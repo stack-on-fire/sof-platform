@@ -102,7 +102,6 @@ const PostPage = ({
 
   useEffect(() => {
     async function registerHit() {
-      console.log(frontMatter);
       const result = await fetch("/api/bumpUpBlogpostHit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

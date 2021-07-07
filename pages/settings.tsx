@@ -7,6 +7,7 @@ import { Box } from "@chakra-ui/react";
 
 const Settings = () => {
   const [session] = useSession();
+  console.log(session);
 
   return (
     <Layout px={0}>

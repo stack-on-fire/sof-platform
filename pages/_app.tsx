@@ -7,6 +7,10 @@ import { Toaster } from "react-hot-toast";
 import { Provider } from "next-auth/client";
 import { useEffect } from "react";
 
+if (process.env.NODE_ENV === "development") {
+  require("mocks");
+}
+
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
