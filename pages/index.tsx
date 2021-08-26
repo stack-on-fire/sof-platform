@@ -37,6 +37,7 @@ const Index = ({ posts }: IndexProps): JSX.Element => {
           {posts.map((post) => {
             return (
               <BlogCard
+                key={post.slug}
                 slug={post.slug}
                 content={post.content}
                 media={post.image}

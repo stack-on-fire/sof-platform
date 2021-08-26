@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Hydrate } from "react-query/hydration";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "next-auth/client";
-import { useEffect } from "react";
 import NextNprogress from "nextjs-progressbar";
 
 if (process.env.NEXT_PUBLIC_ENV === "test") {
