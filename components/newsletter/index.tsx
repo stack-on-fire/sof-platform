@@ -87,7 +87,7 @@ export const Newsletter = ({
             fontWeight="extrabold"
             size={reducedFontSize ? "lg" : "xl"}
           >
-            {title ?? "Get useful programming tips and updates"}
+            {title ?? "Get tips on how to build and sell your first SaaS"}
           </Heading>
           <Box mt="6">
             <form

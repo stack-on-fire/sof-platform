@@ -132,7 +132,7 @@ export const Hero = () => {
             <Newsletter
               noShadow
               reducedFontSize
-              title="We are busy preparing the course. Subscribe to get updates and exclusive pre-launch discounts."
+              title="We are busy preparing the courses. Subscribe to get updates and exclusive pre-launch discounts."
               cta="Subscribe"
               ctaDone="You are subscribed 🎉"
             />
