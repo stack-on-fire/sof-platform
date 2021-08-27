@@ -18,9 +18,16 @@ type Props = {
   cta?: string;
   ctaDone?: string;
   reducedFontSize?: boolean;
+  noShadow?: boolean;
 };
 
-export const Newsletter = ({ title, cta, ctaDone, reducedFontSize }: Props) => {
+export const Newsletter = ({
+  title,
+  cta,
+  ctaDone,
+  reducedFontSize,
+  noShadow,
+}: Props) => {
   const [email, setEmail] = React.useState("");
   const [emailFromLocalStorage, setEmailFromLocalStorage] = React.useState<
     string | null
@@ -58,8 +65,8 @@ export const Newsletter = ({ title, cta, ctaDone, reducedFontSize }: Props) => {
     <Box as="section" py="12">
       <Box
         textAlign="center"
-        bg={mode("white", "gray.800")}
-        shadow="lg"
+        bg={mode("white", "gray.700")}
+        shadow={noShadow ? "undefined" : "lg"}
         maxW={{ base: "xl", md: "3xl" }}
         mx="auto"
         px={{ base: "6", md: "8" }}

@@ -130,6 +130,7 @@ export const Hero = () => {
           <ModalCloseButton />
           <ModalBody>
             <Newsletter
+              noShadow
               reducedFontSize
               title="We are busy preparing the course. Subscribe to get updates and exclusive pre-launch discounts."
               cta="Subscribe"
