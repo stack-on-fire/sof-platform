@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Center, Stack } from "@chakra-ui/layout";
+import { Box, Center } from "@chakra-ui/layout";
 import { motion } from "framer-motion";
 import ReactSvg from "components/svg-icons/react";
 import ChakraSvg from "components/svg-icons/chakra";
@@ -29,7 +29,7 @@ const container = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.3,
+      staggerChildren: 0.2,
     },
   },
 };
@@ -52,7 +52,6 @@ const CurvedStack = () => {
     theme.colors.gray[600],
     theme.colors.gray[200]
   );
-  const [isLargerThan700] = useMediaQuery("(min-width: 700px)");
 
   const iconsMapping = {
     react: <ReactSvg width="60px" height="60px" fill={fill} />,
@@ -67,46 +66,22 @@ const CurvedStack = () => {
     nodejs: <Icon as={SiNodeDotJs} width="60px" height="60px" fill={fill} />,
   };
 
-  const middleIndex = Math.floor(icons.slice(0, 9).length / 2);
-
   return (
-    <Center>
+    <Center my={2}>
       <motion.ul variants={container} initial="hidden" animate="show">
-        {isLargerThan700 ? (
-          <Stack isInline spacing={2}>
-            {icons.splice(0, 9).map((icon, index) => {
-              const moduleFromMiddle = Math.abs(middleIndex - index);
-              const collapseValue = Math.abs(moduleFromMiddle - middleIndex);
-              const top = collapseValue * 20 + "px";
-
-              return (
-                <motion.li
-                  style={{ listStyleType: "none" }}
-                  key={index}
-                  variants={listItem}
-                >
-                  <Box position="relative" top={top}>
-                    {iconsMapping[icon]}
-                  </Box>
-                </motion.li>
-              );
-            })}
-          </Stack>
-        ) : (
-          <SimpleGrid columns={5} gap={2}>
-            {icons.map((icon, index) => {
-              return (
-                <motion.li
-                  style={{ listStyleType: "none" }}
-                  key={index}
-                  variants={listItem}
-                >
-                  <Box>{iconsMapping[icon]}</Box>
-                </motion.li>
-              );
-            })}
-          </SimpleGrid>
-        )}
+        <SimpleGrid columns={5} gap={4}>
+          {icons.map((icon, index) => {
+            return (
+              <motion.li
+                style={{ listStyleType: "none" }}
+                key={index}
+                variants={listItem}
+              >
+                <Box>{iconsMapping[icon]}</Box>
+              </motion.li>
+            );
+          })}
+        </SimpleGrid>
       </motion.ul>
     </Center>
   );
