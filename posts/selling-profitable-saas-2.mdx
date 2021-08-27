@@ -1,0 +1,92 @@
+---
+title: Selling profitable SaaS. How to guide. Part 2.
+description: Choosing the tech stack. Avoiding the most popular mistakes when building SaaS.
+date: "2021-03-20"
+image: "/images/test-image.jpg"
+---
+
+<Image
+  alt={`Flare`}
+  src={`/images/test-image.jpg`}
+  width={800}
+  height={450}
+  priority
+  layout="responsive"
+/>
+
+## TL;DR
+
+I am a software developer with years of experience in both frontend and backend operating on JavaScript/Typescript. I am active on Twitter and at point I decided to built a tool for myself. For 4 months I’ve been building it as a side project and after reaching **$250 MRR** I decided to sell it. The whole deal was **6-figure** and I enjoyed the process much :D
+
+<br />
+
+This is the second part of the series of blogposts where I outline my learnings and share them with you so you can also launch/earn/sell your side(or maybe even next big thing) project! This one is about choosing the tech stack and not failing dramatically when doing so :D
+
+### How to approach the tech stack for a project
+
+Usually you want to follow a simple rule of thumb when choosing a tech stack for any software project. If you want to go fast - go with stable technology that you have the best knowledge for. If you aim is to learn - choose the most popular & modern stack, you’d need to research that for limitation first but you have nothing to loose, right? If your aim is to sell - choose the most conventional technologies on the market, nobody will buy a project written in a single php file, unless it’s remoteok.io 😂
+
+<br />
+
+When I started to work on Tweetastic my main reasoning to choose technologies was mainly to learn and not spend too much effort maintaining the project - it was a healthy mix of tech I already knew and loved and new ones(I even delved a lot into queue-based libraries and databases which was something enlightening to me)
+
+## My choices
+
+Overall the tech stack for the product looks the following way:
+
+### Frontend
+
+- React
+- Chakra UI
+- Apollo GraphQL
+- Recharts
+
+### Backend
+
+- Express
+- GraphQL
+- Redis
+- MongoDB
+- Agenda.js
+- Telegraf for telegram
+
+### Deployment
+
+- Docker
+- Digital ocean
+- Netlify
+- Traefik
+
+This stack is pretty solid and serves the purpose very well. Let’s look at how it all connects together!
+
+I chose microservice architecture for this project and every single functional part of tweetastic lives in a separate repository. This allows for easier maintenance and indeed simplifies the development workflow when it comes to release management.
+
+<br />
+
+Main Frontend application is react based and uses Chakra UI Design System - it’s the best one that we have in the ecosystem right now and there is no second option. If you have the need for speed - choose Chakra. Being couple of weeks into it I was able to code at the speed of design -> which in turn eliminated the need to do Figma prototypes all together. Why designing if you can code straight ahead? :D
+
+<br />
+
+Backend is a simple express server which utilizes GraphQL and communicates with external services via Redis queue. Think of the need to communicate some event from the main backend to schedule-service(microservice responsible for scheduling tweets) or to telegram bot(microservice responsible for sending the messages with info into telegram) or mail-service(responsible for sending the information via email to the customers). Every time need arises a new task is put into the queue responsible for it, in every service there is a monitoring job which listens for those tasks and executes them.
+
+<br />
+
+You might guess that the app is complex and somewhat needs to keep it glued together. In my case every micro service is a docker image - so it’s easy to keep them together in a single docker-compose file. When it comes to proxying requests from sub domains to correct services and providing SSL certificates I use Traefik for that, it’s a bulletproof technology.
+
+<br />
+
+Whenever I release a new tag, a new image is built with respective tag name from that repository. So as I push and release Frontend application docker hub will build the image with a version managed by standard-version. I need to swap version in my production docker-compose and customers can start enjoying the new features.
+
+<br />
+
+Everything is deployed on digital ocean droplet which allows for immense flexibility and customization. Scaling comes almost for free(no need to think about that, pay money for more droplet resources and you can accommodate new users).
+
+<br />
+
+I love the setup and would do most of the things the same way I’ve done for tweetastic but there are learnings I want to share to make everything even better!
+
+1. I’d choose Next.js over create-react-app for web application. Next. just. does. everything. better.
+2. I’d have staging environment straight ahead and not let users test the bugs I introduced into application.
+3. I’d add more extensive cypress testing from the very beginning. It means stealing time from releasing features but makes it generally safer to release them incrementally.
+4. I chose agenda library which is responsible for cron jobs of the app. It was easy to use but for a long time I did not understand what I was doing, it’s well documented but some parts are missing. I’d go with something more conventional.
+5. Most obvious mistake I did was not getting a more powerful droplet with more hard drive memory - app scaled pretty quickly and I had to turn the droplet off couple of times just to resize it. It was done during night and with couple of minutes of downtime but it could have been better for sure.

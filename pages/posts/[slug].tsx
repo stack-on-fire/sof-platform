@@ -12,7 +12,7 @@ import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import mdxPrism from "mdx-prism";
 import Head from "next/head";
-import Layout, { WEBSITE_HOST_URL } from "components/layout";
+import Layout from "components/layout";
 import { MetaProps } from "../../types/layout";
 import { PostType } from "types/post";
 import { postFilePaths, POSTS_PATH } from "utils";
@@ -29,7 +29,7 @@ import MDXComponents from "components/mdx-components";
 import { Global, css } from "@emotion/react";
 import { prismDarkTheme, prismLightTheme } from "styles/prism";
 import { useEffect } from "react";
-import { BsClockFill, BsEye, BsEyeFill } from "react-icons/bs";
+import { BsClockFill, BsEyeFill } from "react-icons/bs";
 import useSWR from "swr";
 import readingTime from "reading-time";
 

@@ -45,7 +45,7 @@ const Quote = (props) => {
     dark: "gray.700",
   };
   return (
-    <Box py={4}>
+    <Box py={8}>
       <Box pos="relative">
         <Box
           position="absolute"
@@ -193,9 +193,9 @@ const MDXComponents = {
   p: (props) => (
     <Text fontSize="lg" as="p" mt={0} lineHeight="tall" {...props} />
   ),
-  ul: (props) => <StyledUl as="ul" pt={2} pl={4} ml={2} {...props} />,
-  ol: (props) => <StyledOl as="ol" pt={2} pl={4} ml={2} {...props} />,
-  li: (props) => <Box as="li" pb={1} {...props} />,
+  ul: (props) => <StyledUl as="ul" py={4} pl={4} ml={2} {...props} />,
+  ol: (props) => <StyledOl as="ol" py={4} pl={4} ml={2} {...props} />,
+  li: (props) => <Box fontSize={18} as="li" pb={1} {...props} />,
   blockquote: Quote,
 };
 
