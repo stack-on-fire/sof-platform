@@ -1,7 +1,5 @@
-import { WarningIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Alert,
   Code,
   Heading,
   Link,

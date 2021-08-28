@@ -44,6 +44,10 @@ const PrismStyle = ({ children }) => {
           html {
             min-width: 356px;
             scroll-behavior: smooth;
+            p,
+            li {
+              font-family: "Open Sans";
+            }
           }
         `}
       />
