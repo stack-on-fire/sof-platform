@@ -128,7 +128,7 @@ export const Features = () => {
       </Box>
       <Modal isOpen={isOpen} onClose={onClose} size="3xl">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent mx={6}>
           <ModalCloseButton />
           <ModalBody>
             <Newsletter
