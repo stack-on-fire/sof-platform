@@ -109,15 +109,15 @@ export const Features = () => {
               name="Viktor"
               role="Design & Code expert"
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              Dimitri is a person who can <b>code</b> and <b>design</b> equally
+              good! This means that if you are learning development from him you
+              are actually learning to design clean interfaces with fantastic UX
+              with the best industry practices!
             </Testimonial>
             <Testimonial
               image="https://unavatar.vercel.app/twitter/VladPasca5"
               name="Vlad Pasca"
-              role=""
+              role="Web Designer & Content Creator"
             >
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
