@@ -14,6 +14,7 @@ import { BsClockFill, BsEyeFill } from "react-icons/bs";
 import Link from "next/link";
 import readingTime from "reading-time";
 import useSWR from "swr";
+import ProfilePicture from "components/profile-pcicture";
 
 interface BlogProps {
   hideCover?: boolean;
@@ -100,30 +101,38 @@ export const BlogCard = (props: BlogProps) => {
                 fontSize="sm"
                 color={mode("gray.600", "gray.400")}
                 spacing={4}
+                justifyContent="space-between"
               >
-                <HStack spacing={0}>
-                  <Box
-                    as={BsEyeFill}
-                    display="inline-block"
-                    me="2"
-                    opacity={0.4}
-                  />
+                <HStack>
+                  <HStack spacing={0}>
+                    <Box
+                      as={BsEyeFill}
+                      display="inline-block"
+                      me="2"
+                      opacity={0.4}
+                    />
 
-                  {hits !== undefined ? (
-                    <Text>{hits}</Text>
-                  ) : (
-                    <Skeleton height={3} width={4} />
-                  )}
+                    {hits !== undefined ? (
+                      <Text>{hits}</Text>
+                    ) : (
+                      <Skeleton height={3} width={4} />
+                    )}
+                  </HStack>
+                  <HStack spacing={0}>
+                    <Box
+                      as={BsClockFill}
+                      display="inline-block"
+                      me="2"
+                      opacity={0.4}
+                    />
+                    <Text>{readingTime(content).text}</Text>
+                  </HStack>
                 </HStack>
-                <HStack spacing={0}>
-                  <Box
-                    as={BsClockFill}
-                    display="inline-block"
-                    me="2"
-                    opacity={0.4}
+                <Box w={"50px"} h={"50px"}>
+                  <ProfilePicture
+                    url={`https://avatars.githubusercontent.com/u/29632358?s=60&v=4`}
                   />
-                  <Text>{readingTime(content).text}</Text>
-                </HStack>
+                </Box>
               </HStack>
             </Flex>
           </Flex>
