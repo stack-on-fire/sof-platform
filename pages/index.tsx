@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { BlogCard } from "components/blog-card";
 import Link from "next/link";
+import { WhoIAm } from "components/who-i-am";
 
 type IndexProps = {
   posts: PostType[];
@@ -25,6 +26,7 @@ const Index = ({ posts }: IndexProps): JSX.Element => {
   return (
     <Layout px={0}>
       <Hero />
+      <WhoIAm />
       <Box mt={8} mb={4} px={[8, 4]}>
         <HStack>
           <Heading>Featured articles</Heading>
@@ -34,7 +36,13 @@ const Index = ({ posts }: IndexProps): JSX.Element => {
             </ChakraLink>
           </Link>
         </HStack>
-        <SimpleGrid mt={8} columns={{ base: 1, md: 2 }} spacing="4" mb="10">
+        <SimpleGrid
+          px={4}
+          mt={8}
+          columns={{ base: 1, md: 2 }}
+          spacing="4"
+          mb="10"
+        >
           {posts.map((post) => {
             return (
               <BlogCard
@@ -51,7 +59,9 @@ const Index = ({ posts }: IndexProps): JSX.Element => {
       </Box>
       <Features />
       {/* <Pricing /> */}
-      <Newsletter />
+      <Box px={6}>
+        <Newsletter />
+      </Box>
     </Layout>
   );
 };
