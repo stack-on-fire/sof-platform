@@ -52,6 +52,7 @@ export const BlogCard = (props: BlogProps) => {
       <Box cursor="pointer">
         <LinkBox
           as="article"
+          height="100%"
           bg={{ sm: mode("white", "gray.700") }}
           shadow={{ sm: "base" }}
           rounded={{ sm: "md" }}
