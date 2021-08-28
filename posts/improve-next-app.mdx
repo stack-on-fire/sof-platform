@@ -1,0 +1,53 @@
+---
+title: Improve your Next.js app user experience in 8 lines of code
+description: What if I told you that your next app could get a 5x UX with addition of these 8 lines of code?
+date: "2021-03-20"
+---
+
+## Problem
+
+Next app is the new standard of a web app in web development. Next has second to none DX(developer experience) out of the box. Although one little thin might be confusing for your end users.
+
+<br />
+
+If you navigate your pages sometimes you may notice that it might seem like something is stuck. This happens because Next.js does not have the indicator for loading page outside the box.
+
+<br />
+
+**gif here**
+
+## Solution
+
+It's easily fixable! Let's use the package `NextProgress` to add a simple yet very powerful hack to the UX of our website.
+
+<br />
+
+Within your `_app.tsx` or `_app.jsx`:
+
+```jsx
+import type { AppProps } from "next/app";
+import NextNprogress from "nextjs-progressbar";
+
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <>
+      <NextNprogress
+        color="#FF8826"
+        startPosition={0.3}
+        stopDelayMs={200}
+        height={2}
+        showOnShallow={true}
+        options={{ showSpinner: false }}
+      />
+      <Component {...pageProps} />
+    </>
+  );
+}
+export default MyApp;
+```
+
+Looks far better now even for the pages which are not prerendered and take some time to load!
+
+<br />
+
+**gif here**

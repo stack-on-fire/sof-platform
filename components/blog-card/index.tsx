@@ -86,6 +86,7 @@ export const BlogCard = (props: BlogProps) => {
                 as="h3"
                 size="sm"
                 mb="2"
+                height={12}
                 lineHeight="base"
                 _groupHover={{ color: "red.400" }}
               >
