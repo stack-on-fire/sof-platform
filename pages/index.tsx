@@ -21,6 +21,7 @@ type IndexProps = {
 };
 
 const Index = ({ posts }: IndexProps): JSX.Element => {
+  const colorMode = useColorModeValue("dark", "light");
   return (
     <Layout px={0}>
       <Hero />
@@ -40,7 +41,7 @@ const Index = ({ posts }: IndexProps): JSX.Element => {
                 key={post.slug}
                 slug={post.slug}
                 content={post.content}
-                media={`https://sof-og-image.vercel.app/${post.title}.png?theme=dark&md=1&fontSize=100px&images=https://www.stackonfire.dev/logo.svg`}
+                media={`https://sof-og-image.vercel.app/${post.title}.png?theme=${colorMode}&md=1&fontSize=100px&images=https://www.stackonfire.dev/logo.svg`}
                 title={post.title}
                 description={post.description}
               />

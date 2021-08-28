@@ -92,6 +92,7 @@ const PostPage = ({
     date: frontMatter.date,
     type: "article",
   };
+  const colorMode = useColorModeValue("dark", "light");
 
   const { data: hitsData, error: hitsError } = useSWR(
     [`/api/getHitsForBlogposts/${slug}`],
@@ -144,6 +145,12 @@ const PostPage = ({
             </HStack>
           </HStack>
         </HStack>
+        <Image
+          layout="responsive"
+          height={720}
+          width={1240}
+          src={`https://sof-og-image.vercel.app/${frontMatter.title}.png?theme=${colorMode}&md=1&fontSize=100px&images=https://www.stackonfire.dev/logo.svg`}
+        />
         <div>
           <PrismStyle>
             <MDXRemote {...source} components={components} />

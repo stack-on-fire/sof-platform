@@ -64,7 +64,7 @@ export const BlogCard = (props: BlogProps) => {
             {!props.hideCover && (
               <Image
                 layout="responsive"
-                height={620}
+                height={720}
                 width={1240}
                 alt={title}
                 src={media}
