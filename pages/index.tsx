@@ -40,7 +40,7 @@ const Index = ({ posts }: IndexProps): JSX.Element => {
                 key={post.slug}
                 slug={post.slug}
                 content={post.content}
-                media={post.image}
+                media={`https://sof-og-image.vercel.app/${post.title}.png?theme=dark&md=1&fontSize=100px&images=https://www.stackonfire.dev/logo.svg`}
                 title={post.title}
                 description={post.description}
               />
