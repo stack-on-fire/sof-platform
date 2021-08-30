@@ -119,9 +119,14 @@ export const Features = () => {
               name="Vlad Pasca"
               role="Web Designer & Content Creator"
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco.
+              The main reason why I started coding was that{" "}
+              <b>I wanted to create a SaaS</b> . But my problem was that I had
+              no idea where to start my learning journey.
+              <br />
+              <br />
+              Luckily Stack on Fire solves these problems for me. Now I finally
+              know where to look for the right tools I need in order to build a
+              SaaS.
             </Testimonial>
           </SimpleGrid>
         </Box>
