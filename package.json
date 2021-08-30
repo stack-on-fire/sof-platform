@@ -36,6 +36,7 @@
     "next-auth": "3.23.3",
     "next-images": "1.7.0",
     "next-mdx-remote": "3.0.2",
+    "next-plausible": "^2.1.1",
     "nextjs-progressbar": "^0.0.11",
     "path": "0.12.7",
     "react": "17.0.2",
