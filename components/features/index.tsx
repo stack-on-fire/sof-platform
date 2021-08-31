@@ -90,10 +90,14 @@ export const Features = () => {
               name="Chris Kalmar"
               role="Software Architect"
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              Dimitri is an engineer that I had the pleasure to work with in a
+              professional environment. His willingness to learn new things and
+              to share his knowledge, makes him a great person to learn from.
+              <br />
+              <br />
+              The fact, that he <b>builds his own SaaS</b> continuously and
+              already <b>managed a profitable exit</b>, shows that he is an
+              expert, not only on the theoretical side of things.
             </Testimonial>
             <Testimonial
               image="https://avatars.githubusercontent.com/u/1021430?v=4"
