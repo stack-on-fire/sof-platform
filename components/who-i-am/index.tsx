@@ -31,7 +31,7 @@ export const WhoIAm = () => (
           >
             Hey! My name is Dimitri and I want to teach you the best opinionated
             ways of developing complex web projects. You take that knowledge and
-            use to achieve your dreams!
+            use it to achieve your dreams!
           </Text>
           <Stack
             direction={{ base: "column", md: "row" }}
