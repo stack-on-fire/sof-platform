@@ -176,12 +176,22 @@ const StyledOl = styled(Box)`
 `;
 
 const MDXComponents = {
-  h1: (props) => <Heading as="h1" size="xl" my={4} {...props} />,
-  h2: (props) => <DocsHeading as="h2" size="lg" fontWeight="bold" {...props} />,
-  h3: (props) => <DocsHeading as="h3" size="md" fontWeight="bold" {...props} />,
-  h4: (props) => <DocsHeading as="h4" size="sm" fontWeight="bold" {...props} />,
-  h5: (props) => <DocsHeading as="h5" size="sm" fontWeight="bold" {...props} />,
-  h6: (props) => <DocsHeading as="h6" size="xs" fontWeight="bold" {...props} />,
+  h1: (props) => <Heading as="h1" size="xl" mb={4} pt={6} {...props} />,
+  h2: (props) => (
+    <DocsHeading as="h2" size="lg" fontWeight="bold" pt={6} {...props} />
+  ),
+  h3: (props) => (
+    <DocsHeading as="h3" size="md" fontWeight="bold" pt={6} {...props} />
+  ),
+  h4: (props) => (
+    <DocsHeading as="h4" size="sm" fontWeight="bold" pt={6} {...props} />
+  ),
+  h5: (props) => (
+    <DocsHeading as="h5" size="sm" fontWeight="bold" pt={6} {...props} />
+  ),
+  h6: (props) => (
+    <DocsHeading as="h6" size="xs" fontWeight="bold" pt={6} {...props} />
+  ),
   inlineCode: (props) => (
     <Code colorScheme="orange" fontSize="0.84em" {...props} />
   ),

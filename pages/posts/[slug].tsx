@@ -155,11 +155,11 @@ const PostPage = ({
           width={1240}
           src={`https://sof-og-image.vercel.app/${frontMatter.title}.png?theme=${colorMode}&md=1&fontSize=100px&images=https://www.stackonfire.dev/logo.svg`}
         />
-        <div>
+        <Box maxWidth="700px" mx="auto">
           <PrismStyle>
             <MDXRemote {...source} components={components} />
           </PrismStyle>
-        </div>
+        </Box>
       </article>
     </Layout>
   );
