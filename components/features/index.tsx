@@ -104,9 +104,14 @@ export const Features = () => {
               name="Dominik Dorfmeister"
               role="Tech lead, React Query core team"
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco.
+              Dimitri is the <b>one Person</b> I would ask about how to build a
+              SaaS.
+              <br />
+              <br />
+              He has done it before successfully, always keeps in touch with the
+              latest tech, and is a phenomenal software architect and team lead.
+              His content is top notch, and StackOnFire will make that available
+              to everyone!
             </Testimonial>
             <Testimonial
               image="https://unavatar.vercel.app/twitter/vponamariov"
