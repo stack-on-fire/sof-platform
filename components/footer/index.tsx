@@ -16,12 +16,12 @@ export const Footer = () => (
     py="12"
     px={{ base: "4", md: "8" }}
   >
-    {/* <Stack>
+    <Stack>
       <Stack direction="row" spacing="4" align="center" justify="space-between">
         <Logo />
         <SocialMediaLinks />
       </Stack>
       <Copyright alignSelf={{ base: "center", sm: "start" }} />
-    </Stack> */}
+    </Stack>
   </Box>
 );
