@@ -33,35 +33,35 @@ const Platform = ({ courses }) => {
   );
 
   return (
-    <Layout px={0}>
-      <Box mt={8} mb={4} px={[8, 4]} minH="100vh">
-        {enrolledData && purchasesData && videoData ? (
-          <EnrolledCourses
-            enrolledCourses={enrolledData}
-            purchasedCourses={purchasesData}
-            watchedVideos={videoData}
-            courses={courses}
-          />
-        ) : (
-          <Box>
-            <Skeleton height="30px" width={200} mb={4} />
-            <SimpleGrid spacing={4}>
-              {[null, null, null]?.map(() => {
-                return (
-                  <Skeleton
-                    border="1px solid"
-                    borderColor="gray.400"
-                    borderRadius={8}
-                    p={4}
-                    height="120px"
-                  />
-                );
-              })}
-            </SimpleGrid>
-          </Box>
-        )}
-      </Box>
-    </Layout>
+<Box>
+      <Navbar />
+
+      {enrolledData && purchasesData && videoData ? (
+        <EnrolledCourses
+          enrolledCourses={enrolledData}
+          purchasedCourses={purchasesData}
+          watchedVideos={videoData}
+          courses={courses}
+        />
+      ) : (
+        <Box maxW="7xl" mx="auto" px={4} mt={4}>
+          <Skeleton height="30px" width={200} mb={4} />
+          <SimpleGrid spacing={4}>
+            {[null, null, null]?.map(() => {
+              return (
+                <Skeleton
+                  border="1px solid"
+                  borderColor="gray.400"
+                  borderRadius={8}
+                  p={4}
+                  height="120px"
+                />
+              );
+            })}
+          </SimpleGrid>
+        </Box>
+      )}
+    </Box>
   );
 };
 
