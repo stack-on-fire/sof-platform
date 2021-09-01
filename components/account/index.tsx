@@ -14,11 +14,12 @@ import * as React from "react";
 import { AccountSwitcherButton } from "./account-switcher-button";
 import { signOut } from "next-auth/client";
 import { useRouter } from "next/dist/client/router";
-import { useSession } from "next-auth/client";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { Feature, useFlag } from "react-fire-flags";
 
-export const AccountSwitcher = () => {
-  const [session, loading] = useSession();
+export const AccountSwitcher = ({ session }) => {
+  const videosFlag = useFlag("Video tutorials");
+
   const { colorMode, toggleColorMode } = useColorMode();
 
   const router = useRouter();
@@ -42,12 +43,15 @@ export const AccountSwitcher = () => {
             <MoonIcon />
           </Stack>
         </Flex>
-        <MenuItem onClick={() => router.push("/platform")}>Courses</MenuItem>
-        <MenuItem onClick={() => router.push("/my-courses")}>
-          My courses
-        </MenuItem>
-        <MenuItem onClick={() => router.push("/")}>Learn more</MenuItem>
+        <MenuItem onClick={() => router.push("/posts")}>Articles</MenuItem>
+        <Feature name="Video tutorials">
+          <MenuItem onClick={() => router.push("/platform")}>Courses</MenuItem>
+          <MenuItem onClick={() => router.push("/my-courses")}>
+            My courses
+          </MenuItem>
+        </Feature>
         <MenuItem onClick={() => router.push("/settings")}>Settings</MenuItem>
+        <MenuItem onClick={() => router.push("/")}>Learn more</MenuItem>
         <MenuDivider />
         <MenuItem
           onClick={() => {

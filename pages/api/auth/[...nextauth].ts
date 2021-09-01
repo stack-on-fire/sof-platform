@@ -37,6 +37,8 @@ const options = {
   callbacks: {
     session: async (session, user) => {
       session.id = user.id;
+      session.user.createdAt = user.createdAt;
+      session.user.name = user.name;
       return Promise.resolve(session);
     },
   },

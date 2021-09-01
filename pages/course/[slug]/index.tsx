@@ -128,7 +128,7 @@ const CourseDetail = ({ course }: Props) => {
         size="lg"
         onClick={async (e) => {
           e.stopPropagation();
-          if (isEnrolled) {
+          if (!isEnrolled) {
             await fetch("/api/enroll", {
               method: "POST",
               headers: { "Content-Type": "application/json" },

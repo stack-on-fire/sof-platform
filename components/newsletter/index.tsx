@@ -7,8 +7,7 @@ import {
   Text,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import splitbee from "@splitbee/web";
-import axios from "axios";
+
 import * as React from "react";
 import { HiShieldCheck } from "react-icons/hi";
 import { useMutation } from "react-query";
@@ -18,12 +17,20 @@ type Props = {
   cta?: string;
   ctaDone?: string;
   reducedFontSize?: boolean;
+  noShadow?: boolean;
 };
 
-export const Newsletter = ({ title, cta, ctaDone, reducedFontSize }: Props) => {
+export const Newsletter = ({
+  title,
+  cta,
+  ctaDone,
+  reducedFontSize,
+  noShadow,
+}: Props) => {
   const [email, setEmail] = React.useState("");
-  const [emailFromLocalStorage, setEmailFromLocalStorage] =
-    React.useState<string | null>(null);
+  const [emailFromLocalStorage, setEmailFromLocalStorage] = React.useState<
+    string | null
+  >(null);
   React.useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("subscribedEmail") !== null) {
@@ -41,13 +48,11 @@ export const Newsletter = ({ title, cta, ctaDone, reducedFontSize }: Props) => {
       },
       method: "POST",
     });
-    splitbee.track("Email sub", { email });
 
     return res;
   };
   const { mutate, data, isLoading } = useMutation(subscribeToEmailList, {
     onSuccess: (res) => {
-      console.log(res);
       if (res.status === 200) {
         localStorage.setItem("subscribedEmail", email);
         setEmailFromLocalStorage(email);
@@ -59,8 +64,8 @@ export const Newsletter = ({ title, cta, ctaDone, reducedFontSize }: Props) => {
     <Box as="section" py="12">
       <Box
         textAlign="center"
-        bg={mode("white", "gray.800")}
-        shadow="lg"
+        bg={mode("white", "gray.700")}
+        shadow={noShadow ? "undefined" : "lg"}
         maxW={{ base: "xl", md: "3xl" }}
         mx="auto"
         px={{ base: "6", md: "8" }}
@@ -81,7 +86,7 @@ export const Newsletter = ({ title, cta, ctaDone, reducedFontSize }: Props) => {
             fontWeight="extrabold"
             size={reducedFontSize ? "lg" : "xl"}
           >
-            {title ?? "Get useful programming tips and updates"}
+            {title ?? "Get tips on how to build and sell your first SaaS"}
           </Heading>
           <Box mt="6">
             <form

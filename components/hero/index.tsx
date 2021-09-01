@@ -4,6 +4,7 @@ import {
   Heading,
   Stack,
   Text,
+  useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
 import {
@@ -13,7 +14,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import splitbee from "@splitbee/web";
+
 import { Newsletter } from "components/newsletter";
 import { motion } from "framer-motion";
 import * as React from "react";
@@ -48,7 +49,12 @@ export const Hero = () => {
 
   return (
     <Box>
-      <Box as="section" bg="gray.800" color="white" pt="7.5rem">
+      <Box
+        as="section"
+        bg={useColorModeValue("white", "gray.800")}
+        color="white"
+        pt="7.5rem"
+      >
         <Box
           maxW={{ base: "xl", md: "7xl" }}
           mx="auto"
@@ -105,7 +111,6 @@ export const Hero = () => {
                     color="orange"
                     onClick={() => {
                       onOpen();
-                      splitbee.track("Open signup form");
                     }}
                   >
                     Get started for free
@@ -121,12 +126,13 @@ export const Hero = () => {
       </Box>
       <Modal isOpen={isOpen} onClose={onClose} size="3xl">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent mx={6}>
           <ModalCloseButton />
           <ModalBody>
             <Newsletter
+              noShadow
               reducedFontSize
-              title="We are busy preparing the course. Subscribe to get updates and exclusive pre-launch discounts."
+              title="We are busy preparing the courses. Subscribe to get updates and exclusive pre-launch discounts."
               cta="Subscribe"
               ctaDone="You are subscribed 🎉"
             />

@@ -2,17 +2,15 @@ import { Box } from "@chakra-ui/layout";
 import client from "apollo-client";
 import { Navbar } from "components";
 import Courses from "components/courses";
+import Layout from "components/layout";
 import gql from "graphql-tag";
 import React from "react";
 
 const Platform = ({ courses }) => {
   return (
-    <Box>
-      <Navbar />
-      <Box maxW={1300} mx="auto">
-        <Courses courses={courses} />
-      </Box>
-    </Box>
+    <Layout px={0}>
+      <Courses courses={courses} />
+    </Layout>
   );
 };
 

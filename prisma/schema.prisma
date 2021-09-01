@@ -96,3 +96,12 @@ model VerificationRequest {
 
   @@map(name: "verification_requests")
 }
+
+model BlogpostHit {
+  id   Int    @id @default(autoincrement())
+  ip   String
+  slug String
+
+  @@unique([ip, slug])
+  @@map(name: "blogpostHits")
+}

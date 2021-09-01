@@ -18,12 +18,13 @@ import client from "apollo-client";
 import ReactPlayer from "react-player";
 import VisuallyHidden from "@chakra-ui/visually-hidden";
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import { customFormatDuration } from "utils";
+import { customFormatDuration } from "utils/custom-format-duration";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Switch } from "@chakra-ui/switch";
 import { useBreakpointValue } from "@chakra-ui/media-query";
 import useSWR from "swr";
 import { CheckCircleIcon } from "@chakra-ui/icons";
+import Layout from "components/layout";
 
 type Props = {
   module: ModuleType;
@@ -67,7 +68,6 @@ const Module = ({ module }: Props) => {
   useEffect(() => {
     if (elRefs.length > 0) {
       const videoDurations = elRefs.map((ref) => {
-        console.log(ref.current.duration);
         return { src: ref.current.src, duration: ref.current.duration };
       });
 
@@ -76,8 +76,7 @@ const Module = ({ module }: Props) => {
   }, [elRefs, metaLoaded]);
 
   return (
-    <Box maxW={1200} m="auto">
-      <Navbar />
+    <Layout>
       <Flex flexGrow={3} direction={["column", "column", "column", "row"]}>
         <Flex
           p={[2, 2, 2, 0]}
@@ -264,7 +263,7 @@ const Module = ({ module }: Props) => {
           {module.description}
         </Text>
       </Box>
-    </Box>
+    </Layout>
   );
 };
 

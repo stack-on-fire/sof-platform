@@ -1,0 +1,47 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
+env:
+  NEXT_PUBLIC_STRAPI_API_URL: http://188.166.82.23:1337
+  NEXT_PUBLIC_STRAPI_API_GRAPHQL: http://188.166.82.23:1337/graphql
+  NEXTAUTH_URL: http://localhost:3000/api/auth
+  GITHUB_CLIENT_ID: 416bc2111738cc80714a
+  GITHUB_CLIENT_SECRET: ${{ secrets.GH_CLIENT_SECRET }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL_STAGING }}
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log env
+        run: echo "${NEXT_PUBLIC_STRAPI_API_URL}&${NEXT_PUBLIC_STRAPI_API_GRAPHQL}&${DATABASE_URL}"
+      - name: Checkout
+        uses: actions/checkout@v2
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build:test
+          start: npm start
+        env:
+          CYPRESS_GITHUB_USER: test@stackonfire.dev
+          CYPRESS_GITHUB_PASSWORD: cmk9CTF8fdn7gvr-qyv
+          CYPRESS_COOKIE_NAME: next-auth.session-token
+          CYPRESS_SITE_NAME: http://localhost:3000
+          IS_CI: ci
+      - name: Storing screenshot artifacts
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - name: Storing video artifacts
+        uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
