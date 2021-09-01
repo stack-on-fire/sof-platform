@@ -74,12 +74,12 @@ export const getStaticProps: GetStaticProps = async () => {
     "title",
     "image",
     "content",
-    "isTestPost",
+    "draft",
   ]);
 
   return {
     props: {
-      posts: posts.slice(0, 2),
+      posts: posts.filter((post) => !post.draft).slice(0, 2),
     },
   };
 };

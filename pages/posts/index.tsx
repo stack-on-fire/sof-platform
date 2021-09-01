@@ -14,7 +14,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { BlogCard } from "components/blog-card";
-import Link from "next/link";
 
 type IndexProps = {
   posts: PostType[];
@@ -67,11 +66,12 @@ export const getStaticProps: GetStaticProps = async () => {
     "image",
     "content",
     "isTestPost",
+    "draft",
   ]);
 
   return {
     props: {
-      posts,
+      posts: posts.filter((post) => !post.draft),
     },
   };
 };
