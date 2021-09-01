@@ -32,6 +32,7 @@ import { useEffect } from "react";
 import { BsClockFill, BsEyeFill } from "react-icons/bs";
 import useSWR from "swr";
 import readingTime from "reading-time";
+import MdxNewsletter from "components/newsletter/mdx-newsletter";
 
 const PrismStyle = ({ children }) => {
   const { colorMode } = useColorMode();
@@ -64,6 +65,7 @@ const components = {
   Head,
   Image,
   Link,
+  MdxNewsletter,
   ...MDXComponents,
 };
 

@@ -8,7 +8,6 @@ import {
   useColorModeValue as mode,
 } from "@chakra-ui/react";
 
-import axios from "axios";
 import * as React from "react";
 import { HiShieldCheck } from "react-icons/hi";
 import { useMutation } from "react-query";
