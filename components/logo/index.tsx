@@ -19,30 +19,9 @@ export const Logo = (props: Props) => {
       <Image
         src="/logo.svg"
         alt="Picture of the author"
-        width={40}
-        height={40}
+        width={140}
+        height={60}
       />
-      {props.preserveText ? (
-        <Heading
-          position="relative"
-          right="5px"
-          fontFamily="Rubik, mono"
-          size="lg"
-        >
-          tack on 🔥
-        </Heading>
-      ) : (
-        !isSmallerThan600px && (
-          <Heading
-            position="relative"
-            right="5px"
-            fontFamily="Rubik, mono"
-            size="lg"
-          >
-            tack on 🔥
-          </Heading>
-        )
-      )}
     </Stack>
   );
 };

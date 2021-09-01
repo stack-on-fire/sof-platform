@@ -1,7 +1,6 @@
 import { Box, SimpleGrid } from "@chakra-ui/layout";
 import { Skeleton } from "@chakra-ui/skeleton";
 import client from "apollo-client";
-
 import EnrolledCourses from "components/enrolled-courses";
 import Layout from "components/layout";
 import gql from "graphql-tag";
