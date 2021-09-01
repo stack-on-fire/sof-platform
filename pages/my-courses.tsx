@@ -3,7 +3,6 @@ import { Skeleton } from "@chakra-ui/skeleton";
 import client from "apollo-client";
 import { Navbar } from "components";
 import EnrolledCourses from "components/enrolled-courses";
-import Layout from "components/layout";
 import gql from "graphql-tag";
 import React from "react";
 import useSWR from "swr";
@@ -33,9 +32,8 @@ const Platform = ({ courses }) => {
   );
 
   return (
-<Box>
+    <Box>
       <Navbar />
-
       {enrolledData && purchasesData && videoData ? (
         <EnrolledCourses
           enrolledCourses={enrolledData}
