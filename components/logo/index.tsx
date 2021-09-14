@@ -1,6 +1,5 @@
 import {
-  Box,
-  Heading,
+  useColorMode,
   HTMLChakraProps,
   Stack,
   useMediaQuery,
@@ -12,12 +11,12 @@ type ExtendedProps = { preserveText?: boolean };
 type Props = HTMLChakraProps<"svg"> & ExtendedProps;
 
 export const Logo = (props: Props) => {
-  const [isSmallerThan600px] = useMediaQuery("(max-width: 600px)");
+  const { colorMode } = useColorMode();
 
   return (
     <Stack isInline alignItems="center">
       <Image
-        src="/logo.svg"
+        src={colorMode === "dark" ? "/dark-logo.svg" : "/logo.svg"}
         alt="Picture of the author"
         width={140}
         height={60}
