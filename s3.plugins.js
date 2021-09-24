@@ -3,7 +3,7 @@ module.exports = () => ({
     provider: "aws-s3",
     providerOptions: {
       accessKeyId: "AKIAUH4OLPU6VMEXMRVC",
-      secretAccessKey: "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",
+      secretAccessKey: process.env.AWS_ACCESS_KEY,
       region: "eu-central-1",
       params: {
         Bucket: "stackonfire-dev",
